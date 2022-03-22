@@ -2472,6 +2472,8 @@ MonoBehaviour:
   loseUI: {fileID: 1670788453}
   hintCounterUI: {fileID: 198195632}
   timerCounterUI: {fileID: 339182547}
+  piecesLeftUI: {fileID: 0}
+  elapsedTimeUI: {fileID: 0}
   musicToggleUI: {fileID: 475537978}
   soundToggleUI: {fileID: 2016712118}
   musicPlayer: {fileID: 0}
@@ -2977,7 +2979,7 @@ MonoBehaviour:
   dragTiltSpeed: 2
   mobileDragOffsetY: 0.5
   centerDraggedPiece: 1
-  alternativeDragging: 1
+  alternativeDragging: 0
   allowedDistance: 0.5
   allowedRotation: 10
   groupingDistance: 0.5

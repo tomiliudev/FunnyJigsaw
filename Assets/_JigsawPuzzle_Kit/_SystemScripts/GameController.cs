@@ -203,7 +203,7 @@ public class GameController : MonoBehaviour
 
 				case PuzzleState.DropPiece:
 					PlaySound(soundDrop);
-					break;
+                    break;
 
 				// Hide all pieces and finish game - if whole puzzle Assembled 	
 				case PuzzleState.PuzzleAssembled:
