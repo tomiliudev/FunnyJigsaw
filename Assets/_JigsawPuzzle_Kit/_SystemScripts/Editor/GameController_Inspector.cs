@@ -117,9 +117,13 @@ public class GameController_Inspector : Editor
 
 
 		// SetDirty if changed and update SceneView
-		if (!Application.isPlaying  &&  GUI.changed) 
+		if (!Application.isPlaying  &&  GUI.changed)
+        {
 			EditorSceneManager.MarkSceneDirty(game.gameObject.scene);
-		
+        }
+
+		// カスタムエディターを使った場合、これを呼ばないとpublicであってもinspectorに表示されない
+		DrawDefaultInspector();
 	}
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------

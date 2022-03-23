@@ -7,16 +7,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UniRx;
 
 
 [AddComponentMenu("Scripts/Jigsaw Puzzle/Game Controller")]
 public class GameController : MonoBehaviour 
 {
-
 	public Camera gameCamera;
+
+	// パズルのリスト
+	[SerializeField] List<PuzzleController> puzzleList;
 	public PuzzleController puzzle;
 
-    public bool findByTag = false;
+	[SerializeField] PuzzleClassicModel _model;
+
+	// パズルの数
+	public int PuzzleCount => puzzleList.Count;
+
+	public bool findByTag = false;
 
     // Automatically align puzzle/camera with screen corners to fit puzzle with max filling
     public ScreenAnchor fitToScreenAnchor = ScreenAnchor.None;
@@ -67,6 +75,50 @@ public class GameController : MonoBehaviour
 	Color backgroundColor;
 	static Vector3 oldPointerPosition;
 
+	void LoadPuzzle(int idx)
+    {
+		if (puzzle != null)
+        {
+            DestroyImmediate(puzzle.gameObject);
+            puzzle = null;
+        }
+        puzzle = Instantiate(puzzleList[idx]);
+
+        var foundObject = GameObject.FindGameObjectWithTag("Puzzle_Background");
+        if (foundObject)
+        {
+			background = foundObject.GetComponent<Renderer>();
+			backgroundColor = background.material.color;
+		}
+    }
+
+	void ShowHintUI()
+    {
+		if (hintCounterUI)
+		{
+			if (hintCounterUI.transform.parent)
+				hintCounterUI.transform.parent.gameObject.SetActive(remainingHints != 0);
+
+			hintCounterUI.transform.gameObject.SetActive(remainingHints > 0);
+
+			hintCounterUI.text = remainingHints.ToString();
+		}
+	}
+
+	private void Start()
+    {
+		_model.CurrentPuzzleIdx
+			.SkipLatestValueOnSubscribe()// Subscribe時のOnNextをSkip
+            .Subscribe(
+                idx =>
+                {
+					Debug.Log($"currentPuzzleIndex ={idx}");
+					LoadPuzzle(idx);
+					RestartPuzzle();
+					ShowHintUI();
+				})
+            .AddTo(this);
+    }
 
 
     //=====================================================================================================
@@ -91,13 +143,18 @@ public class GameController : MonoBehaviour
         // Try to automatically find/assign puzzle and background by tags
         if (findByTag)
         {
-            GameObject foundObject = GameObject.FindGameObjectWithTag("Puzzle_Main");
-            if (foundObject)
-                puzzle = foundObject.GetComponent<PuzzleController>();
+            //GameObject foundObject = GameObject.FindGameObjectWithTag("Puzzle_Main");
+            //if (foundObject)
+            //{
+            //    puzzle = foundObject.GetComponent<PuzzleController>();
+            //}
+            //foundObject = GameObject.FindGameObjectWithTag("Puzzle_Background");
+            //if (foundObject)
+            //    background = foundObject.GetComponent<Renderer>();
 
-            foundObject = GameObject.FindGameObjectWithTag("Puzzle_Background");
-            if (foundObject)
-                background = foundObject.GetComponent<Renderer>();
+            var idx = PlayerPrefs.GetInt("CurrentPuzzleIdx", 0);
+            LoadPuzzle(idx);
+            RestartPuzzle();
         }
         
         // Load saved data
@@ -118,16 +175,8 @@ public class GameController : MonoBehaviour
 		
 		if (timerCounterUI) 
 			timerCounterUI.gameObject.SetActive(timer > 0);
-		
-		if (hintCounterUI) 
-		{
-            if (hintCounterUI.transform.parent)
-                hintCounterUI.transform.parent.gameObject.SetActive(remainingHints != 0);
-           
-            hintCounterUI.transform.gameObject.SetActive(remainingHints > 0);
 
-            hintCounterUI.text = remainingHints.ToString();
-        }
+		ShowHintUI();
 
 
 		// Init timer
