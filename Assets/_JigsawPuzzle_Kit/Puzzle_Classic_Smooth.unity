@@ -942,6 +942,7 @@ GameObject:
   - component: {fileID: 284933004}
   - component: {fileID: 284933003}
   - component: {fileID: 284933002}
+  - component: {fileID: 284933005}
   m_Layer: 5
   m_Name: Button_Restart
   m_TagString: Untagged
@@ -1017,18 +1018,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 473304080}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Restart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 473304080}
-        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -1080,6 +1069,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284933000}
   m_CullTransparentMesh: 1
+--- !u!114 &284933005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284933000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c527068e10d4ca6a5eb711c0c0a378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &339182545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,6 +2421,7 @@ GameObject:
   - component: {fileID: 1072693543}
   - component: {fileID: 1072693542}
   - component: {fileID: 1072693541}
+  - component: {fileID: 1072693544}
   m_Layer: 5
   m_Name: Button_Restart
   m_TagString: Untagged
@@ -2495,18 +2497,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 473304080}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Restart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 473304080}
-        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -2558,6 +2548,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1072693539}
   m_CullTransparentMesh: 1
+--- !u!114 &1072693544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072693539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c527068e10d4ca6a5eb711c0c0a378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1131508380 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1162041149704304, guid: 43050ec7f3faeaa41b77fe994931bd80,
@@ -5233,6 +5235,7 @@ GameObject:
   - component: {fileID: 2129645327}
   - component: {fileID: 2129645326}
   - component: {fileID: 2129645325}
+  - component: {fileID: 2129645328}
   m_Layer: 5
   m_Name: Button_Restart
   m_TagString: Untagged
@@ -5308,18 +5311,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 473304080}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Restart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 473304080}
-        m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
@@ -5371,3 +5362,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129645323}
   m_CullTransparentMesh: 1
+--- !u!114 &2129645328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129645323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c527068e10d4ca6a5eb711c0c0a378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

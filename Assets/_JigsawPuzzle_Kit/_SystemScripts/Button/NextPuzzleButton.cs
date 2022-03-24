@@ -1,28 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using UniRx;
-using System;
+using UnityEngine;
 
-public class NextPuzzleButton : MonoBehaviour
+public sealed class NextPuzzleButton : ButtonBase
 {
     [SerializeField] PuzzleClassicModel _model;
-    Button _nextPuzzleButton;
-
-    GameController _gameController;
 
     // Start is called before the first frame update
     void Start()
     {
-        var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        _gameController = mainCamera.GetComponent<GameController>();
-
-        _nextPuzzleButton = GetComponent<Button>();
-        _nextPuzzleButton.OnClickAsObservable()
-            .ThrottleFirst(TimeSpan.FromSeconds(0.5f))
-            .Subscribe(OnNextPuzzleButton)
-            .AddTo(this);
+        _onButton = OnNextPuzzleButton;
     }
 
     void OnNextPuzzleButton(Unit _)

@@ -1,20 +1,13 @@
-using System;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
-public sealed class ShuffleButton : MonoBehaviour
+public sealed class ShuffleButton : ButtonBase
 {
     PuzzleController _puzzleCon;
-    Button _shuffleButton;
 
     void Start()
     {
-        _shuffleButton = GetComponent<Button>();
-        _shuffleButton.OnClickAsObservable()
-            .ThrottleFirst(TimeSpan.FromSeconds(0.5f))
-            .Subscribe(OnShuffle)
-            .AddTo(this);
+        _onButton = OnShuffle;
     }
 
     void OnShuffle(Unit _)
