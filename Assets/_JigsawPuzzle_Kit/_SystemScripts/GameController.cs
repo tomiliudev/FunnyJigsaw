@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour
 	public Text elapsedTimeUI;
 	public Toggle musicToggleUI;
 	public Toggle soundToggleUI;
+	[SerializeField] GameObject _inGameUI;
 
 	// Music-related
 	public AudioSource musicPlayer; 
@@ -62,9 +63,10 @@ public class GameController : MonoBehaviour
 	// Game rules
 	public float timer;					// Time limit for level
 	public int hintLimit = -1;			// Hints limit for level
-	public bool invertRules = false;	// Allows to invert basic rules - i.e. player should decompose  the images
+	public bool invertRules = false;    // Allows to invert basic rules - i.e. player should decompose  the images
 
-
+	// SimpleDialog
+	public SimpleDialog _dialog;
 
 	// Important internal variables - please don't change them blindly
 	CameraController cameraScript;
@@ -224,6 +226,7 @@ public class GameController : MonoBehaviour
 		if (Input.GetKeyUp(KeyCode.Escape)) 
 			Pause ();
 
+		_inGameUI.SetActive(!gameFinished);
 
 		if (puzzle  &&  Time.timeScale > 0  &&  !gameFinished)
 		{
@@ -259,9 +262,13 @@ public class GameController : MonoBehaviour
 					if (background && !invertRules) 
 						puzzle.SetPiecesActive(false); 
 					
-					if (winUI) 
+					if (winUI)
+                    {
 						winUI.SetActive(true);
-					
+					}
+
+					_dialog.ShowDialog("やった！", 0, false);
+
 					PlayMusic(musicWin, false);
 					gameFinished = true;
 					break;	
@@ -556,7 +563,11 @@ public class GameController : MonoBehaviour
 				PlayMusic(musicLose, false);
 
 				if (loseUI)
+                {
 					loseUI.SetActive(true);
+				}
+
+				_dialog.ShowDialog("ざんねん！また頑張ろう！", 1, true);
 
 				gameFinished = true;
 			}
@@ -570,10 +581,8 @@ public class GameController : MonoBehaviour
 					seconds_tmp = (seconds_tmp == 60) ? 0 : seconds_tmp;
 
 					timerCounterUI.text = minutes_tmp.ToString() + ":" + seconds_tmp.ToString("00");
-
 				}
 			}
-
     }
 
 	//-----------------------------------------------------------------------------------------------------	 
@@ -649,11 +658,14 @@ public class GameController : MonoBehaviour
 		}
 
 		if (winUI)
+        {
 			winUI.SetActive(false);
+		}
+
+		_dialog.SwitchDialog(false);
 
 		PlayMusic(musicMain, true);
 		gameFinished = false;
-
 
 		ResetPuzzle();
 	}

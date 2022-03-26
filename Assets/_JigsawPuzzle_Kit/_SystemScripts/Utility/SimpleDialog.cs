@@ -154,5 +154,23 @@ public class SimpleDialog : MonoBehaviour
 
 	}
 
-	//-----------------------------------------------------------------------------------------------------	
+	//-----------------------------------------------------------------------------------------------------
+
+
+	/*
+	 * 指定のダイアログ表示
+	 */
+	public void ShowDialog(string text, int characterId, bool inverted)
+    {
+		messageWindow.SetActive(false);
+		messageText.text = text;
+		messageCharacter.sprite = characters[characterId];
+		anim.clip = inverted ? invertedAnimation : defaultAnimation;
+		messageWindow.SetActive(true);
+	}
+
+	public void SwitchDialog(bool flag)
+    {
+		messageWindow.SetActive(flag);
+	}
 }

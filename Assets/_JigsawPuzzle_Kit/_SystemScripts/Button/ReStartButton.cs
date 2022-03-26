@@ -10,6 +10,6 @@ public sealed class ReStartButton : ButtonBase
     void OnReStartButton(Unit _)
     {
         _gameController.RestartPuzzle();
-        transform.parent.gameObject.SetActive(false);
+        transform.parent.parent.gameObject.SetActive(false);
     }
 }
