@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UniRx;
-
+using System;
 
 [AddComponentMenu("Scripts/Jigsaw Puzzle/Game Controller")]
 public class GameController : MonoBehaviour 
@@ -259,18 +259,7 @@ public class GameController : MonoBehaviour
 
 				// Hide all pieces and finish game - if whole puzzle Assembled 	
 				case PuzzleState.PuzzleAssembled:
-					if (background && !invertRules) 
-						puzzle.SetPiecesActive(false); 
-					
-					if (winUI)
-                    {
-						winUI.SetActive(true);
-					}
-
-					_dialog.ShowDialog("やった！", 0, false);
-
-					PlayMusic(musicWin, false);
-					gameFinished = true;
+					DoWin();
 					break;	
 			}
 
@@ -291,6 +280,32 @@ public class GameController : MonoBehaviour
 
 
 		if (piecesLeftUI) piecesLeftUI.text = puzzle.remainingPieces.ToString() + " / " + puzzle.pieces.Length.ToString();
+	}
+
+	void DoWin()
+    {
+		// クリアしたパズルを記録する
+        string clearedPuzzleName = background.name.Replace("_background", "");
+        List<string> clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
+        if (!clearedPuzzles.Contains(clearedPuzzleName))
+        {
+            clearedPuzzles.Add(clearedPuzzleName);
+            PlayerPrefsUtility.SaveList(GameConfig.ClearedPuzzlesKey, clearedPuzzles);
+        }
+
+        if (background && !invertRules)
+		{
+			puzzle.SetPiecesActive(false);
+		}
+
+		if (winUI)
+		{
+			winUI.SetActive(true);
+		}
+		_dialog.ShowDialog("やった！", 0, false);
+
+		PlayMusic(musicWin, false);
+		gameFinished = true;
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 
