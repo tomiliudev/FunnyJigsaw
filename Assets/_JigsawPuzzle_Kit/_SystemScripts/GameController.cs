@@ -10,10 +10,18 @@ using UnityEngine.EventSystems;
 using UniRx;
 using System;
 
+public enum GameMode
+{
+	classic,
+	timeAttack
+}
+
 [AddComponentMenu("Scripts/Jigsaw Puzzle/Game Controller")]
-public class GameController : MonoBehaviour 
+public class GameController : ControllerBase
 {
 	public Camera gameCamera;
+
+	[SerializeField] GameMode _gameMode = GameMode.classic;
 
 	// パズルのリスト
 	[SerializeField] List<PuzzleController> puzzleList;
@@ -70,12 +78,14 @@ public class GameController : MonoBehaviour
 
 	// Important internal variables - please don't change them blindly
 	CameraController cameraScript;
+	float startTime = 0f;
 	float timerTime = 20.0f;
 	float remainingTime, elapsedTime;
 	bool gameFinished = false;
     int remainingHints;
 	Color backgroundColor;
 	static Vector3 oldPointerPosition;
+
 
 	void LoadPuzzle(int idx)
     {
@@ -96,6 +106,8 @@ public class GameController : MonoBehaviour
 
 	void ShowHintUI()
     {
+		if(_gameMode == GameMode.timeAttack) hintCounterUI.transform.gameObject.SetActive(false);
+
 		if (hintCounterUI)
 		{
 			if (hintCounterUI.transform.parent)
@@ -109,23 +121,26 @@ public class GameController : MonoBehaviour
 
 	private void Start()
     {
-		_model.CurrentPuzzleIdx
+        if (_gameMode == GameMode.classic)
+        {
+			_model.CurrentPuzzleIdx
 			.SkipLatestValueOnSubscribe()// Subscribe時のOnNextをSkip
-            .Subscribe(
-                idx =>
-                {
+			.Subscribe(
+				idx =>
+				{
 					Debug.Log($"currentPuzzleIndex ={idx}");
 					LoadPuzzle(idx);
 					RestartPuzzle();
 					ShowHintUI();
 				})
-            .AddTo(this);
+			.AddTo(this);
+		}
     }
 
 
     //=====================================================================================================
     // Initialize
-    void OnEnable () 
+    protected void OnEnable () 
 	{
          // Prepare Camera
         if (!gameCamera) 
@@ -145,18 +160,12 @@ public class GameController : MonoBehaviour
         // Try to automatically find/assign puzzle and background by tags
         if (findByTag)
         {
-            //GameObject foundObject = GameObject.FindGameObjectWithTag("Puzzle_Main");
-            //if (foundObject)
-            //{
-            //    puzzle = foundObject.GetComponent<PuzzleController>();
-            //}
-            //foundObject = GameObject.FindGameObjectWithTag("Puzzle_Background");
-            //if (foundObject)
-            //    background = foundObject.GetComponent<Renderer>();
-
-            var idx = PlayerPrefs.GetInt("CurrentPuzzleIdx", 0);
-            LoadPuzzle(idx);
-            RestartPuzzle();
+            if (_gameMode == GameMode.classic)
+            {
+				var idx = PlayerPrefs.GetInt("CurrentPuzzleIdx", 0);
+				LoadPuzzle(idx);
+				RestartPuzzle();
+			}
         }
         
         // Load saved data
@@ -173,30 +182,27 @@ public class GameController : MonoBehaviour
 			loseUI.SetActive(false);
 		
 		if (pauseUI) 
-			pauseUI.SetActive(false);  
-		
-		if (timerCounterUI) 
-			timerCounterUI.gameObject.SetActive(timer > 0);
+			pauseUI.SetActive(false);
+
+		if (timerCounterUI) timerCounterUI.gameObject.SetActive(timer > 0);
+		if (_gameMode == GameMode.timeAttack)
+        {
+			startTime = Time.time;
+		}
 
 		ShowHintUI();
-
 
 		// Init timer
 		timerTime = Time.time + remainingTime;
 		Time.timeScale = 1.0f;
-		if (elapsedTimeUI)
-			elapsedTimeUI.text = SecondsToTimeString(elapsedTime);
-
 
 		Cursor.lockState = CursorLockMode.Confined;
-
 
         if (!puzzle)
         {
             this.enabled = false;
             return;
         }
-
 
         // Initiate puzzle and prepare background
         if (StartPuzzle(puzzle))
@@ -223,9 +229,8 @@ public class GameController : MonoBehaviour
 	// Main game cycle
 	void Update () 
 	{
-		if (Input.GetKeyUp(KeyCode.Escape)) 
-			Pause ();
-
+		if (Input.GetKeyUp(KeyCode.Escape)) Pause ();
+		
 		_inGameUI.SetActive(!gameFinished);
 
 		if (puzzle  &&  Time.timeScale > 0  &&  !gameFinished)
@@ -263,22 +268,28 @@ public class GameController : MonoBehaviour
 					break;	
 			}
 
-
-			ProcessTimer ();
-			if (elapsedTimeUI) elapsedTimeUI.text = GetElapsedTime();
+            if (_gameMode == GameMode.classic)
+            {
+				ProcessTimer();
+            }
+            else
+            {
+				if (elapsedTimeUI) elapsedTimeUI.text = GetElapsedTime();
+			}
 		}
-		else  // Show background (assembled puzzle) if gameFinished
-			if (gameFinished  &&  (!loseUI  ||  (loseUI && !loseUI.activeSelf)) ) 
-				if(!invertRules) 
-					ShowBackground();
-
+		// Show background (assembled puzzle) if gameFinished
+		else if (gameFinished  &&  (!loseUI  ||  (loseUI && !loseUI.activeSelf)))
+        {
+			if (!invertRules) ShowBackground();
+		}
 
         // Control Camera   
         if (cameraScript && puzzle)
-           // if (puzzle.GetCurrentPiece() == null)  cameraScript.ManualUpdate();
-            cameraScript.enabled = (puzzle.GetCurrentPiece() == null);
-
-
+        {
+			// if (puzzle.GetCurrentPiece() == null)  cameraScript.ManualUpdate();
+			cameraScript.enabled = (puzzle.GetCurrentPiece() == null);
+		}
+           
 		if (piecesLeftUI) piecesLeftUI.text = puzzle.remainingPieces.ToString() + " / " + puzzle.pieces.Length.ToString();
 	}
 
@@ -311,20 +322,17 @@ public class GameController : MonoBehaviour
 	//-----------------------------------------------------------------------------------------------------	 
 	string GetElapsedTime()
 	{
-		elapsedTime = Mathf.Abs(timer - (timerTime - Time.time));
-
+		elapsedTime = Mathf.Abs(Time.time - startTime);
 		return SecondsToTimeString(elapsedTime);
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 
 	string SecondsToTimeString(float _seconds)
 	{
-		elapsedTime = Mathf.Abs(timer - (timerTime - Time.time));
-
-		float minutes_tmp = (int)(elapsedTime / 60);
+		float minutes_tmp = (int)(_seconds / 60);
 		float hours_tmp = (int)(minutes_tmp / 60);
 		minutes_tmp = (int)(minutes_tmp % 60);
-		float seconds_tmp = (int)(elapsedTime % 60);
+		float seconds_tmp = (int)(_seconds % 60);
 		seconds_tmp = (seconds_tmp == 60) ? 0 : seconds_tmp;
 
 		return hours_tmp.ToString() + ":" + minutes_tmp.ToString() + ":" + seconds_tmp.ToString("00");

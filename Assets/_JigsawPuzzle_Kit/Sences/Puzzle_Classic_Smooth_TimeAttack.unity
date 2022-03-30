@@ -360,7 +360,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: Pause
         m_Mode: 1
@@ -372,7 +372,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -819,7 +819,7 @@ PrefabInstance:
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 473304080}
+      objectReference: {fileID: 0}
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMusicActive
@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -1583,31 +1583,18 @@ GameObject:
 --- !u!114 &473304080
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 11424164, guid: 86dcb78e758964e2889fde05d9f88f02,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473304079}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b39598bce67ffec488590f4a2c845c55, type: 3}
+  m_Script: {fileID: 11500000, guid: 49ee0d662c2654115b4971d6b8d4fe74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameCamera: {fileID: 473304081}
-  puzzleList:
-  - {fileID: 8992531661036283654, guid: f7faafacab10c4789a0a6505f8775049, type: 3}
-  - {fileID: 3134374391295333996, guid: 8a75c08a55ff04f609d36b314d530a94, type: 3}
-  - {fileID: 5909660037957684168, guid: 1b30d131d9fd64ea6860c74ac2f03259, type: 3}
-  - {fileID: 1132114674565724680, guid: c0bba34e5331145c7b11bba6b9dd58b8, type: 3}
-  - {fileID: 4112389516801495173, guid: a6f37b336f1c24ea0b34e8d32703bb13, type: 3}
-  - {fileID: 5422332603666075612, guid: c2813c6d4f3744e078d4e429b2915404, type: 3}
-  - {fileID: 9217395120120457050, guid: 67a37c5a1bfcc4ad788287378996b65f, type: 3}
-  - {fileID: 3302665361451213090, guid: e9cf4db62e6824952ac16e92824b14a4, type: 3}
-  - {fileID: 6142417826016932468, guid: b7208fe1ea80c4655806d9aebc53a3d2, type: 3}
-  - {fileID: 4154872920610987428, guid: 40b576e6d20ca4935bfc38551a8f9620, type: 3}
-  - {fileID: 2525679247689131725, guid: 91c2d05e6f8ae4cbbb54e977770c373e, type: 3}
-  - {fileID: 8924576944579048104, guid: 21745068ab1a2486491835b87d81531f, type: 3}
-  - {fileID: 676363990623061660, guid: 122a1c20e92ee497ea43dfdb203f3910, type: 3}
+  _gameMode: 1
+  puzzleList: []
   puzzle: {fileID: 0}
   _model: {fileID: 1377720316}
   findByTag: 1
@@ -1619,9 +1606,9 @@ MonoBehaviour:
   winUI: {fileID: 1289220782}
   loseUI: {fileID: 1670788453}
   hintCounterUI: {fileID: 198195632}
-  timerCounterUI: {fileID: 339182547}
+  timerCounterUI: {fileID: 0}
   piecesLeftUI: {fileID: 0}
-  elapsedTimeUI: {fileID: 0}
+  elapsedTimeUI: {fileID: 339182547}
   musicToggleUI: {fileID: 475537978}
   soundToggleUI: {fileID: 2016712118}
   _inGameUI: {fileID: 513332259}
@@ -1633,8 +1620,8 @@ MonoBehaviour:
   soundGrab: {fileID: 8300000, guid: 3ca66b50b2c97470ea13e0567f885b55, type: 3}
   soundDrop: {fileID: 8300000, guid: 34f2e64c494674f26a8a663401dbc646, type: 3}
   soundAssemble: {fileID: 8300000, guid: d34585d6e126f493fb37be6b163d3468, type: 3}
-  timer: 211
-  hintLimit: 30
+  timer: 0
+  hintLimit: -1
   invertRules: 0
   _dialog: {fileID: 473304087}
 --- !u!20 &473304081
@@ -2106,7 +2093,7 @@ PrefabInstance:
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 473304080}
+      objectReference: {fileID: 0}
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetSoundActive
@@ -2185,6 +2172,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
+--- !u!1 &963703634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 963703635}
+  m_Layer: 0
+  m_Name: abc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &963703635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963703634}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.2044334, y: 2.543492, z: 132.0309}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &965243170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2453,7 +2470,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -3268,7 +3285,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -3593,7 +3610,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -3826,7 +3843,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: Save
         m_Mode: 1
@@ -3838,7 +3855,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -3851,7 +3868,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: LoadLevel
         m_Mode: 3
@@ -3993,10 +4010,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'TIME LEFT:
-
-
-'
+  m_Text: 'TIME:'
 --- !u!222 &1606241924
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4432,7 +4446,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: Save
         m_Mode: 1
@@ -4444,7 +4458,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -4457,7 +4471,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: LoadLevel
         m_Mode: 3
@@ -4783,7 +4797,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: Pause
         m_Mode: 1
@@ -4795,7 +4809,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -4952,7 +4966,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: Save
         m_Mode: 1
@@ -4964,7 +4978,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -4977,7 +4991,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: LoadLevel
         m_Mode: 3
@@ -5233,7 +5247,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: ShowHint
         m_Mode: 1
@@ -5245,7 +5259,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2
@@ -5470,7 +5484,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473304080}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: PlaySound
         m_Mode: 2

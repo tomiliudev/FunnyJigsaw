@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
-using System;
 
 public sealed class PuzzlePartsView : MonoBehaviour
 {
@@ -19,6 +17,7 @@ public sealed class PuzzlePartsView : MonoBehaviour
                 {
                     var sprite = Resources.Load<Sprite>($"MySon/{puzzleName}");
                     x.GetComponent<Image>().sprite = sprite;
+                    x.GetComponent<PuzzleThumbnail>().PuzzleName = puzzleName;
                     x.SetActive(true);
                 }
             )
