@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UniRx;
+using UnityEngine;
 
 public sealed class TimeAttackMenuController : MonoBehaviour
 {
@@ -24,14 +23,19 @@ public sealed class TimeAttackMenuController : MonoBehaviour
                         var puzzleParts = Instantiate(_puzzleParts, parent, false);
                         puzzlePartsView = puzzleParts.GetComponent<PuzzlePartsView>();
                     }
-                    puzzlePartsView.SetPuzzlePanelInfo(x.puzzleName);
+
+                    int idx = 0;
+                    if (x.count <= 4)
+                    {
+                        idx = x.count - 1;
+                    }
+                    else
+                    {
+                        idx = x.count % 4 == 0 ? 4 - 1 : x.count % 4 - 1;
+                    }
+
+                    puzzlePartsView.SetPuzzlePanelInfo(idx, x.puzzleName);
                 }
             ).AddTo(this);
-    }
-
-
-    public void DeleteKey()
-    {
-        PlayerPrefs.DeleteAll();
     }
 }

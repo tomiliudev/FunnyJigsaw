@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +13,9 @@ public sealed class PuzzlePanel : MonoBehaviour
 
     public void SetPuzzleThumbnailImage(Sprite sprite)
     {
-        _puzzleThumbnail.GetComponent<Image>().sprite = sprite;
+        var thumbnailImage = _puzzleThumbnail.GetComponent<Image>();
+        thumbnailImage.sprite = sprite;
+        thumbnailImage.gameObject.SetActive(true);
     }
 
     public void SetBestTime(string puzzleName)
@@ -23,5 +23,6 @@ public sealed class PuzzlePanel : MonoBehaviour
         string key = $"{puzzleName}_bestTime";
         float elapsedTime = PlayerPrefsUtility.Load(key, 0f);
         _bestTime.text = string.Format("Best Time:{0}", GameUtility.SecondsToTimeString(elapsedTime));
+        _bestTime.gameObject.SetActive(true);
     }
 }
