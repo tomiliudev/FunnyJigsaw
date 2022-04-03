@@ -18,8 +18,10 @@ public sealed class PuzzlePanel : MonoBehaviour
         _puzzleThumbnail.GetComponent<Image>().sprite = sprite;
     }
 
-    public void SetBestTime(float bestTimeSec)
+    public void SetBestTime(string puzzleName)
     {
-        _bestTime.text = "";
+        string key = $"{puzzleName}_bestTime";
+        float elapsedTime = PlayerPrefsUtility.Load(key, 0f);
+        _bestTime.text = string.Format("Best Time:{0}", GameUtility.SecondsToTimeString(elapsedTime));
     }
 }

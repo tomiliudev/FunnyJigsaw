@@ -6,7 +6,7 @@ public sealed class PuzzlePartsView : MonoBehaviour
 {
     [SerializeField] List<GameObject> puzzlePanelList;
 
-    public void SetPuzzleImage(string puzzleName)
+    public void SetPuzzlePanelInfo(string puzzleName)
     {
         puzzlePanelList.ToObservable()
             .Where(x => !x.activeSelf)
@@ -18,7 +18,7 @@ public sealed class PuzzlePartsView : MonoBehaviour
                     var puzzlePanel = x.GetComponent<PuzzlePanel>();
                     puzzlePanel.SetPuzzleThumbnailImage(sprite);
                     puzzlePanel.SetPuzzleName(puzzleName);
-                    puzzlePanel.SetBestTime(125f);
+                    puzzlePanel.SetBestTime(puzzleName);
                     x.SetActive(true);
                 }
             )

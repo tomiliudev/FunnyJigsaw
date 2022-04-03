@@ -295,13 +295,33 @@ public class GameController : ControllerBase
 
 	void DoWin()
     {
-		// クリアしたパズルを記録する
-        string clearedPuzzleName = background.name.Replace("_background", "");
-        List<string> clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
-        if (!clearedPuzzles.Contains(clearedPuzzleName))
+		// クリアしたパズル名を取得する
+		string clearedPuzzleName = background.name.Replace("_background", "");
+
+		if (_gameMode == GameMode.classic)
         {
-            clearedPuzzles.Add(clearedPuzzleName);
-            PlayerPrefsUtility.SaveList(GameConfig.ClearedPuzzlesKey, clearedPuzzles);
+			// クリアしたパズルを記録する
+			
+			List<string> clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
+			if (!clearedPuzzles.Contains(clearedPuzzleName))
+			{
+				clearedPuzzles.Add(clearedPuzzleName);
+				PlayerPrefsUtility.SaveList(GameConfig.ClearedPuzzlesKey, clearedPuzzles);
+			}
+        }
+        else
+        {
+			string key = $"{clearedPuzzleName}_bestTime";
+			// TimeAttackモードの場合はクリアした時の時間（BestTime）を記録する
+			var bestTime = PlayerPrefsUtility.Load(key, 0f);
+			if (
+				// 初めてクリアした場合
+				!PlayerPrefs.HasKey(key)
+				// ベストタイム更新した場合
+				|| elapsedTime < bestTime)
+            {
+				PlayerPrefsUtility.Save(key, elapsedTime);
+			}
         }
 
         if (background && !invertRules)
@@ -323,19 +343,7 @@ public class GameController : ControllerBase
 	string GetElapsedTime()
 	{
 		elapsedTime = Mathf.Abs(Time.time - startTime);
-		return SecondsToTimeString(elapsedTime);
-	}
-
-	//-----------------------------------------------------------------------------------------------------	 
-	string SecondsToTimeString(float _seconds)
-	{
-		float minutes_tmp = (int)(_seconds / 60);
-		float hours_tmp = (int)(minutes_tmp / 60);
-		minutes_tmp = (int)(minutes_tmp % 60);
-		float seconds_tmp = (int)(_seconds % 60);
-		seconds_tmp = (seconds_tmp == 60) ? 0 : seconds_tmp;
-
-		return hours_tmp.ToString() + ":" + minutes_tmp.ToString() + ":" + seconds_tmp.ToString("00");
+		return GameUtility.SecondsToTimeString(elapsedTime);
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 

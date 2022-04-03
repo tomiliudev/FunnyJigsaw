@@ -24,7 +24,7 @@ public sealed class TimeAttackMenuController : MonoBehaviour
                         var puzzleParts = Instantiate(_puzzleParts, parent, false);
                         puzzlePartsView = puzzleParts.GetComponent<PuzzlePartsView>();
                     }
-                    puzzlePartsView.SetPuzzleImage(x.puzzleName);
+                    puzzlePartsView.SetPuzzlePanelInfo(x.puzzleName);
                 }
             ).AddTo(this);
     }
