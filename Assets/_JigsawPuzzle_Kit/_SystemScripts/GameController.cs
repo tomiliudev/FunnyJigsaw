@@ -690,6 +690,12 @@ public class GameController : ControllerBase
 		PlayMusic(musicMain, true);
 		gameFinished = false;
 
+        if (_gameMode == GameMode.timeAttack)
+        {
+			startTime = Time.time;
+			elapsedTime = 0f;
+        }
+
 		ResetPuzzle();
 	}
 

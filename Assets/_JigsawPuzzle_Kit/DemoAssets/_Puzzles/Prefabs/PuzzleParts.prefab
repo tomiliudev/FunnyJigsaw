@@ -59,7 +59,7 @@ MonoBehaviour:
     m_Right: 20
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 3
   m_Spacing: 20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -100,11 +100,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5343f662bb0e47acbfa5c411510290e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleImageList:
-  - {fileID: 1703913503395471787}
-  - {fileID: 4718905398121475500}
-  - {fileID: 349171049631192232}
-  - {fileID: 4676118666042582468}
+  puzzlePanelList:
+  - {fileID: 6228888573568842910}
+  - {fileID: 4414755035450349726}
+  - {fileID: 4487042845959148647}
+  - {fileID: 2391060512866894677}
 --- !u!1 &349171049631192232
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +124,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1020532774028157757
 RectTransform:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1456170616328333968
 RectTransform:
   m_ObjectHideFlags: 0
@@ -459,13 +459,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9021527276773958459}
+  - component: {fileID: 7306287937932455331}
   m_Layer: 5
   m_Name: Puzzle4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9021527276773958459
 RectTransform:
   m_ObjectHideFlags: 0
@@ -482,11 +483,25 @@ RectTransform:
   m_Father: {fileID: 562074011451686075}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 780, y: -100}
   m_SizeDelta: {x: 200, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7306287937932455331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2391060512866894677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17813ccbf234478caadc97b8c8bc2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puzzleThumbnail: {fileID: 4218277465985046083}
+  _bestTime: {fileID: 2619549456317623337}
 --- !u!1 &4414755035450349726
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,13 +511,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 260493042996578865}
+  - component: {fileID: 5909120583653146371}
   m_Layer: 5
   m_Name: Puzzle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &260493042996578865
 RectTransform:
   m_ObjectHideFlags: 0
@@ -519,11 +535,25 @@ RectTransform:
   m_Father: {fileID: 562074011451686075}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 340, y: -100}
   m_SizeDelta: {x: 200, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5909120583653146371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414755035450349726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17813ccbf234478caadc97b8c8bc2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puzzleThumbnail: {fileID: 8491383969599924913}
+  _bestTime: {fileID: 464300604175758579}
 --- !u!1 &4487042845959148647
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,13 +563,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1226264243387960912}
+  - component: {fileID: 959310747214804960}
   m_Layer: 5
   m_Name: Puzzle3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1226264243387960912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -556,11 +587,25 @@ RectTransform:
   m_Father: {fileID: 562074011451686075}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 560, y: -100}
   m_SizeDelta: {x: 200, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &959310747214804960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4487042845959148647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17813ccbf234478caadc97b8c8bc2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puzzleThumbnail: {fileID: 5863389051930187152}
+  _bestTime: {fileID: 6264431100964940224}
 --- !u!1 &4676118666042582468
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,7 +625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4280742162244759101
 RectTransform:
   m_ObjectHideFlags: 0
@@ -713,7 +758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5145706125308409515
 RectTransform:
   m_ObjectHideFlags: 0
@@ -836,13 +881,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 186316331084159075}
+  - component: {fileID: 2596418500397546524}
   m_Layer: 5
   m_Name: Puzzle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &186316331084159075
 RectTransform:
   m_ObjectHideFlags: 0
@@ -859,11 +905,25 @@ RectTransform:
   m_Father: {fileID: 562074011451686075}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 120, y: -100}
   m_SizeDelta: {x: 200, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2596418500397546524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6228888573568842910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17813ccbf234478caadc97b8c8bc2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puzzleThumbnail: {fileID: 3007256788708049870}
+  _bestTime: {fileID: 5562694894565752352}
 --- !u!1 &7798269946186132135
 GameObject:
   m_ObjectHideFlags: 0

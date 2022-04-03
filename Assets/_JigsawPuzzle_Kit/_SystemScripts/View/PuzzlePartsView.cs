@@ -1,23 +1,24 @@
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
 public sealed class PuzzlePartsView : MonoBehaviour
 {
-    [SerializeField] List<GameObject> puzzleImageList;
+    [SerializeField] List<GameObject> puzzlePanelList;
 
     public void SetPuzzleImage(string puzzleName)
     {
-        puzzleImageList.ToObservable()
+        puzzlePanelList.ToObservable()
             .Where(x => !x.activeSelf)
             .Take(1)
             .Subscribe(
                 x =>
                 {
                     var sprite = Resources.Load<Sprite>($"MySon/{puzzleName}");
-                    x.GetComponent<Image>().sprite = sprite;
-                    x.GetComponent<PuzzleThumbnail>().PuzzleName = puzzleName;
+                    var puzzlePanel = x.GetComponent<PuzzlePanel>();
+                    puzzlePanel.SetPuzzleThumbnailImage(sprite);
+                    puzzlePanel.SetPuzzleName(puzzleName);
+                    puzzlePanel.SetBestTime(125f);
                     x.SetActive(true);
                 }
             )
