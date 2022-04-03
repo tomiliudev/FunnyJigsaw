@@ -1,9 +1,12 @@
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public sealed class TimeAttackGameController : GameController
 {
+    [SerializeField] Text _bestTime;
+
     public sealed class InitData : BaseInitData
     {
         public string puzzleName;
@@ -22,8 +25,15 @@ public sealed class TimeAttackGameController : GameController
     protected async UniTaskVoid OnEnable()
     {
         await WaitUntilInitDataNotNull().ToUniTask();
-        var puzzle = Resources.Load<PuzzleController>($"Prefabs/MySon/Puzzle_{initData.puzzleName}_5x5");
+
+        string puzzleName = initData.puzzleName;
+        var puzzle = Resources.Load<PuzzleController>($"Prefabs/MySon/Puzzle_{puzzleName}_5x5");
         base.puzzle = Instantiate(puzzle);
+
+        string key = $"{puzzleName}_bestTime";
+        float elapsedTime = PlayerPrefsUtility.Load(key, 0f);
+        _bestTime.text = GameUtility.SecondsToTimeString(elapsedTime);
+
         base.OnEnable();
     }
 
