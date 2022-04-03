@@ -313,10 +313,11 @@ public class GameController : ControllerBase
         {
 			string key = $"{clearedPuzzleName}_bestTime";
 			// TimeAttackモードの場合はクリアした時の時間（BestTime）を記録する
-			var bestTime = PlayerPrefsUtility.Load(key, 0f);
+			float bestTime = PlayerPrefsUtility.Load(key, 0f);
+
 			if (
 				// 初めてクリアした場合
-				!PlayerPrefs.HasKey(key)
+				bestTime <= 0f
 				// ベストタイム更新した場合
 				|| elapsedTime < bestTime)
             {
@@ -831,12 +832,11 @@ public class GameController : ControllerBase
 	{
 		if (puzzle != null) 
 		{
+			Debug.Log($"puzzle.name = {puzzle.name}");
 			puzzle.SaveProgress (puzzle.name);
 			PlayerPrefs.SetInt (puzzle.name + "_hints", remainingHints);
 			PlayerPrefs.SetFloat (puzzle.name + "_timer", timer - elapsedTime);
-			PlayerPrefs.SetFloat(puzzle.name + "_elapsedTime", elapsedTime);
 		}
-
 	}
 
 	//-----------------------------------------------------------------------------------------------------	
@@ -871,18 +871,17 @@ public class GameController : ControllerBase
 			Debug.Log("No saved data found for: " + puzzle.name + "_timer", gameObject);
 			remainingTime = timer;
 		}
-
-		if (PlayerPrefs.HasKey(puzzle.name + "_elapsedTime"))
-			elapsedTime = PlayerPrefs.GetFloat(puzzle.name + "_elapsedTime");
-
 	}  
 
 	//-----------------------------------------------------------------------------------------------------	
 	// Save progress if player closes the application
 	public void OnApplicationQuit() 
 	{
-		Save ();
-		PlayerPrefs.Save();
+        if (_gameMode != GameMode.timeAttack)
+        {
+			Save();
+			PlayerPrefs.Save();
+		}
 	}
 
 	//-----------------------------------------------------------------------------------------------------	

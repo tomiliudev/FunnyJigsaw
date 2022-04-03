@@ -28,4 +28,10 @@ public sealed class TimeAttackMenuController : MonoBehaviour
                 }
             ).AddTo(this);
     }
+
+
+    public void DeleteKey()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }
