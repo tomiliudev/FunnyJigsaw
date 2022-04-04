@@ -8,7 +8,7 @@ public sealed class PuzzlePartsView : MonoBehaviour
     public void SetPuzzlePanelInfo(int idx, string puzzleName)
     {
         var x = puzzlePanelList[idx];
-        var sprite = Resources.Load<Sprite>($"MySon/{puzzleName}");
+        var sprite = Resources.Load<Sprite>($"PuzzleThumbnails/{puzzleName}");
         var puzzlePanel = x.GetComponent<PuzzlePanel>();
         puzzlePanel.SetPuzzleThumbnailImage(sprite);
         puzzlePanel.SetPuzzleName(puzzleName);

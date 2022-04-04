@@ -29,7 +29,7 @@ public sealed class TimeAttackGameController : GameController
         await WaitUntilInitDataNotNull().ToUniTask();
 
         string puzzleName = initData.puzzleName;
-        var puzzle = Resources.Load<PuzzleController>($"Prefabs/MySon/Puzzle_{puzzleName}_5x5");
+        var puzzle = Resources.Load<PuzzleController>($"Prefabs/Puzzles/Puzzle_{puzzleName}_5x5");
         base.puzzle = Instantiate(puzzle);
 
         _bestTime.text = GetBestTimeStr(puzzleName);

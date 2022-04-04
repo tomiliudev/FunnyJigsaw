@@ -14,7 +14,7 @@ public sealed class TimeAttackMenuController : MainMenu
     {
         base.Start();
 
-        PuzzlePartsView puzzlePartsView = new PuzzlePartsView();
+        PuzzlePartsView puzzlePartsView = null;
         _clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
         _clearedPuzzles.ToObservable()
             .Select(puzzleName => (count:_clearedPuzzles.IndexOf(puzzleName) + 1, puzzleName))
@@ -39,11 +39,5 @@ public sealed class TimeAttackMenuController : MainMenu
                     puzzlePartsView.SetPuzzlePanelInfo(idx, x.puzzleName);
                 }
             ).AddTo(this);
-    }
-
-
-    void bbb(bool flag)
-    {
-        Debug.Log("bbb = " + flag);
     }
 }

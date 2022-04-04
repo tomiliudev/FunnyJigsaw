@@ -118,8 +118,10 @@ public class MainMenu : MonoBehaviour
 	{
 		if (soundPlayer  &&  soundPlayer.enabled  &&  _sound) 
 			soundPlayer.PlayOneShot(_sound);
-
 	}	  
 
-
+	public void DeleteCache()
+    {
+		PlayerPrefs.DeleteAll();
+    }
 }

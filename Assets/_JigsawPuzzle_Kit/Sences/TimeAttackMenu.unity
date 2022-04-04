@@ -124,12 +124,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &33963115 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1162041149704304, guid: 43050ec7f3faeaa41b77fe994931bd80,
-    type: 3}
-  m_PrefabInstance: {fileID: 555842959}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &33963116 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224417018621607312, guid: 43050ec7f3faeaa41b77fe994931bd80,
@@ -1110,7 +1104,6 @@ GameObject:
   - component: {fileID: 1178168118}
   - component: {fileID: 1178168116}
   - component: {fileID: 1178168115}
-  - component: {fileID: 1178168120}
   - component: {fileID: 1178168117}
   m_Layer: 0
   m_Name: Main Camera
@@ -1214,66 +1207,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1178168120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178168114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 852fefd0068df0f488f92b1331803793, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  messageWindow: {fileID: 33963115}
-  messageCharacter: {fileID: 1517648959}
-  messageText: {fileID: 1295455841}
-  backgroundPanel: {fileID: 0}
-  nextButton: {fileID: 0}
-  defaultAnimation: {fileID: 7400000, guid: a976f440a3f1a47e9a5289ee55cd2449, type: 2}
-  invertedAnimation: {fileID: 7400000, guid: 14bc848fb3cbd46bd9ddf372bbffb7b7, type: 2}
-  lineLengthLimit: 0
-  pauseGame: 0
-  messages:
-  - text: <br>   Hello and welcome " Jigsaw Puzzle Kit" demo!
-    delay: 2
-    characterId: 0
-    inverted: 1
-    startAction:
-      m_PersistentCalls:
-        m_Calls: []
-  - text: This Demo will show you an example of puzzle games, <br> those can be easily
-      created  using this Kit!
-    delay: 5
-    characterId: 1
-    inverted: 0
-    startAction:
-      m_PersistentCalls:
-        m_Calls: []
-  - text: ' Kit allows to create puzzles almost from anything: <br> - Generate from
-      plane images<br> - Import hand-made puzzle from Photoshop <br> - Use 3D models'
-    delay: 10
-    characterId: 1
-    inverted: 0
-    startAction:
-      m_PersistentCalls:
-        m_Calls: []
-  characters:
-  - {fileID: 21300000, guid: 61d0e21f42d5348ac9fb1d3b11b5fe05, type: 3}
-  - {fileID: 21300000, guid: 3e3749e94c38d415db016e1b54d15677, type: 3}
---- !u!114 &1295455841 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114501647442972352, guid: 43050ec7f3faeaa41b77fe994931bd80,
-    type: 3}
-  m_PrefabInstance: {fileID: 555842959}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1312619063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1421,18 +1354,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1517648959 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114610048980829090, guid: 43050ec7f3faeaa41b77fe994931bd80,
-    type: 3}
-  m_PrefabInstance: {fileID: 555842959}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1728546744
