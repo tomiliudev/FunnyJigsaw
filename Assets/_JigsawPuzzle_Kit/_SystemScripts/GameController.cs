@@ -80,7 +80,7 @@ public class GameController : ControllerBase
 	CameraController cameraScript;
 	float startTime = 0f;
 	float timerTime = 20.0f;
-	float remainingTime, elapsedTime;
+	protected float remainingTime, elapsedTime;
 	bool gameFinished = false;
     int remainingHints;
 	Color backgroundColor;
@@ -293,8 +293,10 @@ public class GameController : ControllerBase
 		if (piecesLeftUI) piecesLeftUI.text = puzzle.remainingPieces.ToString() + " / " + puzzle.pieces.Length.ToString();
 	}
 
-	void DoWin()
+	protected virtual void DoWin()
     {
+		Debug.Log("22222");
+
 		// クリアしたパズル名を取得する
 		string clearedPuzzleName = background.name.Replace("_background", "");
 
@@ -341,7 +343,7 @@ public class GameController : ControllerBase
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 
-	string GetElapsedTime()
+	protected string GetElapsedTime()
 	{
 		elapsedTime = Mathf.Abs(Time.time - startTime);
 		return GameUtility.SecondsToTimeString(elapsedTime);
