@@ -106,12 +106,10 @@ public class GameController : ControllerBase
 
 	void ShowHintUI()
     {
-		if(_gameMode == GameMode.timeAttack) hintCounterUI.transform.gameObject.SetActive(false);
-
 		if (hintCounterUI)
 		{
 			if (hintCounterUI.transform.parent)
-				hintCounterUI.transform.parent.gameObject.SetActive(remainingHints != 0);
+				hintCounterUI.transform.parent.gameObject.SetActive(remainingHints > 0);
 
 			hintCounterUI.transform.gameObject.SetActive(remainingHints > 0);
 
@@ -851,17 +849,17 @@ public class GameController : ControllerBase
 			puzzle.LoadProgress(puzzle.name); 
 
 
-		if (PlayerPrefs.HasKey (puzzle.name + "_hints"))
+		if (_gameMode == GameMode.classic && PlayerPrefs.HasKey (puzzle.name + "_hints"))
 		{
 			remainingHints = PlayerPrefs.GetInt (puzzle.name + "_hints");
 			if (hintCounterUI)
 				hintCounterUI.text = remainingHints.ToString ();
 		} 
 		else
-			{
-				Debug.Log ("No saved data found for: " + puzzle.name + "_hints", gameObject);
-				remainingHints = hintLimit;  
-			}
+		{
+			Debug.Log ("No saved data found for: " + puzzle.name + "_hints", gameObject);
+			remainingHints = hintLimit;  
+		}
 
 
 		if (PlayerPrefs.HasKey(puzzle.name + "_timer"))
