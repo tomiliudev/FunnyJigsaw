@@ -272,7 +272,7 @@ public class GameController : ControllerBase
             }
             else
             {
-				if (elapsedTimeUI) elapsedTimeUI.text = GetElapsedTime();
+				if (elapsedTimeUI) elapsedTimeUI.text = GetElapsedTime(ReturnElapsedTime());
 			}
 		}
 		// Show background (assembled puzzle) if gameFinished
@@ -293,8 +293,6 @@ public class GameController : ControllerBase
 
 	protected virtual void DoWin()
     {
-		Debug.Log("22222");
-
 		// クリアしたパズル名を取得する
 		string clearedPuzzleName = background.name.Replace("_background", "");
 
@@ -308,22 +306,9 @@ public class GameController : ControllerBase
 				clearedPuzzles.Add(clearedPuzzleName);
 				PlayerPrefsUtility.SaveList(GameConfig.ClearedPuzzlesKey, clearedPuzzles);
 			}
-        }
-        else
-        {
-			string key = $"{clearedPuzzleName}_bestTime";
-			// TimeAttackモードの場合はクリアした時の時間（BestTime）を記録する
-			float bestTime = PlayerPrefsUtility.Load(key, 0f);
 
-			if (
-				// 初めてクリアした場合
-				bestTime <= 0f
-				// ベストタイム更新した場合
-				|| elapsedTime < bestTime)
-            {
-				PlayerPrefsUtility.Save(key, elapsedTime);
-			}
-        }
+			_dialog.ShowDialog("やった！次も頑張ろう！", 0, false);
+		}
 
         if (background && !invertRules)
 		{
@@ -334,17 +319,21 @@ public class GameController : ControllerBase
 		{
 			winUI.SetActive(true);
 		}
-		_dialog.ShowDialog("やった！", 0, false);
-
+		
 		PlayMusic(musicWin, false);
 		gameFinished = true;
 	}
 
-	//-----------------------------------------------------------------------------------------------------	 
-	protected string GetElapsedTime()
-	{
+	//-----------------------------------------------------------------------------------------------------
+	protected float ReturnElapsedTime()
+    {
 		elapsedTime = Mathf.Abs(Time.time - startTime);
-		return GameUtility.SecondsToTimeString(elapsedTime);
+		return elapsedTime;
+	}
+
+	protected string GetElapsedTime(float _elapsedTime)
+	{
+		return GameUtility.SecondsToTimeString(_elapsedTime);
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 

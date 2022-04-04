@@ -21,11 +21,17 @@ public class MainMenu : MonoBehaviour
 	public Toggle musicToggleUI;
 	public Toggle soundToggleUI;
 
+	[SerializeField] GameObject timeAttackButtonMask;
+
 
 
 	//=====================================================================================================
 	protected void Start () 
 	{
+
+		List<string> clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
+		if(timeAttackButtonMask != null) timeAttackButtonMask.SetActive(clearedPuzzles.Count < 5);
+
 		// Prepare AudioSources for soundPlayer and musicPlayer
 		if (!soundPlayer  &&  (soundClick  ||  soundDialog)) soundPlayer = gameObject.AddComponent<AudioSource>();
 		if (!musicPlayer  &&  musicMain) 
