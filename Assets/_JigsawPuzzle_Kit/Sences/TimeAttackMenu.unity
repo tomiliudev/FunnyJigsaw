@@ -407,23 +407,47 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
-      value: .735294104
+      value: 0.7352941
       objectReference: {fileID: 0}
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: m_Colors.m_NormalColor.g
-      value: .735294104
+      value: 0.7352941
       objectReference: {fileID: 0}
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: m_Colors.m_NormalColor.r
-      value: .735294104
+      value: 0.7352941
       objectReference: {fileID: 0}
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: m_Colors.m_ColorMultiplier
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1178168117}
+    - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMusicActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 11437918, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: m_Color.b
@@ -523,6 +547,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+--- !u!114 &668205681 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 668205680}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &805711744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,6 +1147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cfb529d852054b0c920246471f2f9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicPlayer: {fileID: 0}
+  soundPlayer: {fileID: 0}
+  musicMain: {fileID: 8300000, guid: 4ebd614b3ef3464448e5fb89ebd22ba0, type: 3}
+  soundClick: {fileID: 8300000, guid: e8ecf2fb5786d44d3a129ba399919a11, type: 3}
+  soundDialog: {fileID: 8300000, guid: 3ca66b50b2c97470ea13e0567f885b55, type: 3}
+  musicToggleUI: {fileID: 668205681}
+  soundToggleUI: {fileID: 1312619064}
   _puzzleParts: {fileID: 115701997377522924, guid: d95dfc72f61594cad9b471fe10cd765e,
     type: 3}
   parent: {fileID: 429625397}
@@ -1264,23 +1307,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
-      value: .735294104
+      value: 0.7352941
       objectReference: {fileID: 0}
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: m_Colors.m_NormalColor.g
-      value: .735294104
+      value: 0.7352941
       objectReference: {fileID: 0}
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: m_Colors.m_NormalColor.r
-      value: .735294104
+      value: 0.7352941
       objectReference: {fileID: 0}
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: m_Colors.m_ColorMultiplier
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1178168117}
+    - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSoundActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 22467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: m_Pivot.x
@@ -1356,6 +1411,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
+--- !u!114 &1312619064 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1312619063}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1517648959 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114610048980829090, guid: 43050ec7f3faeaa41b77fe994931bd80,

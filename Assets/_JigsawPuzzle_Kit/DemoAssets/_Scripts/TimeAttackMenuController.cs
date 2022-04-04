@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-public sealed class TimeAttackMenuController : MonoBehaviour
+public sealed class TimeAttackMenuController : MainMenu
 {
     [SerializeField] GameObject _puzzleParts;
     [SerializeField] Transform parent;
@@ -10,8 +10,10 @@ public sealed class TimeAttackMenuController : MonoBehaviour
     List<string> _clearedPuzzles = new List<string>();
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
+        base.Start();
+
         PuzzlePartsView puzzlePartsView = new PuzzlePartsView();
         _clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
         _clearedPuzzles.ToObservable()
@@ -37,5 +39,11 @@ public sealed class TimeAttackMenuController : MonoBehaviour
                     puzzlePartsView.SetPuzzlePanelInfo(idx, x.puzzleName);
                 }
             ).AddTo(this);
+    }
+
+
+    void bbb(bool flag)
+    {
+        Debug.Log("bbb = " + flag);
     }
 }

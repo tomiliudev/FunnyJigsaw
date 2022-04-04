@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
 
 
 	//=====================================================================================================
-	void Start () 
+	protected void Start () 
 	{
 		// Prepare AudioSources for soundPlayer and musicPlayer
 		if (!soundPlayer  &&  (soundClick  ||  soundDialog)) soundPlayer = gameObject.AddComponent<AudioSource>();

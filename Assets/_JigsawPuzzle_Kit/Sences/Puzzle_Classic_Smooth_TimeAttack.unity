@@ -817,12 +817,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1082353848}
     m_Modifications:
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 473304080}
     - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMusicActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 22437916, guid: 361c10bb159e54590bade69dcebcd4f7, type: 3}
       propertyPath: m_Pivot.x
@@ -2190,12 +2198,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1082353848}
     m_Modifications:
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 473304080}
     - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetSoundActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 22467718, guid: c8f531d4396f44cb3a460e475fad7b4d, type: 3}
       propertyPath: m_Pivot.x

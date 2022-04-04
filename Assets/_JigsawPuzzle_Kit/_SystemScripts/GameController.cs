@@ -767,7 +767,7 @@ public class GameController : ControllerBase
 
 	//-----------------------------------------------------------------------------------------------------	
 	// Enable/disable music 
-	public void SetMusicActive (bool _enabled) 
+	void SetMusicActive (bool _enabled) 
 	{
 		if (musicPlayer) 
 		{
@@ -783,7 +783,7 @@ public class GameController : ControllerBase
 
 	//-----------------------------------------------------------------------------------------------------	 
 	// Enable/disable sounds 
-	public void SetSoundActive (bool _enabled) 
+	void SetSoundActive (bool _enabled) 
 	{
 		if (soundPlayer) 
 		{
