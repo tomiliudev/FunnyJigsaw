@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UniRx;
 using System;
+using System.Linq;
 
 public enum GameMode
 {
@@ -94,7 +95,9 @@ public class GameController : ControllerBase
             DestroyImmediate(puzzle.gameObject);
             puzzle = null;
         }
-        puzzle = Instantiate(puzzleList[idx]);
+
+		_model.UpdateCurrentPuzzleIdx(idx);
+		puzzle = Instantiate(puzzleList[idx]);
 
         var foundObject = GameObject.FindGameObjectWithTag("Puzzle_Background");
         if (foundObject)
@@ -126,7 +129,6 @@ public class GameController : ControllerBase
 			.Subscribe(
 				idx =>
 				{
-					Debug.Log($"currentPuzzleIndex ={idx}");
 					LoadPuzzle(idx);
 					RestartPuzzle();
 					ShowHintUI();
@@ -155,19 +157,32 @@ public class GameController : ControllerBase
 		if (!musicPlayer   &&   (musicMain  ||  musicWin  ||  musicLose)) 
 			musicPlayer = gameObject.AddComponent<AudioSource>();
 
-        // Try to automatically find/assign puzzle and background by tags
-        if (findByTag)
-        {
-            if (_gameMode == GameMode.classic)
+		if (_gameMode == GameMode.classic)
+		{
+			// パズルをロードする
+			int idx = 0;
+
+			List<string> clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
+			clearedPuzzles = clearedPuzzles.Select(x => $"Puzzle_{x}_5x5").ToList();
+			var notClearedPuzzles = puzzleList.Select(x => x.name).Except(clearedPuzzles);
+            if (notClearedPuzzles.Count() > 0)
             {
-				var idx = PlayerPrefs.GetInt("CurrentPuzzleIdx", 0);
-				LoadPuzzle(idx);
-				RestartPuzzle();
+				// すべてクリア済みではないのであれば、一番先頭の未クリアのパズルを参照する
+				var notClearedPuzzle = puzzleList.First(x => x.name == notClearedPuzzles.ElementAt(0));
+				idx = puzzleList.IndexOf(notClearedPuzzle);
 			}
+            else
+            {
+				// すべてクリア済みの場合はシャッフルする
+				puzzleList = puzzleList.OrderBy(x => Guid.NewGuid()).ToList();
+			}
+
+			LoadPuzzle(idx);
+            RestartPuzzle();
         }
-        
-        // Load saved data
-        Load ();
+
+		// Load saved data
+		Load ();
 		LoadAudioActivity();
 
         PlayMusic (musicMain, true); 
@@ -299,7 +314,6 @@ public class GameController : ControllerBase
 		if (_gameMode == GameMode.classic)
         {
 			// クリアしたパズルを記録する
-			
 			List<string> clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
 			if (!clearedPuzzles.Contains(clearedPuzzleName))
 			{
