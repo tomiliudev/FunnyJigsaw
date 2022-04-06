@@ -67,6 +67,7 @@ public sealed class TimeAttackGameController : GameController
             || elapsedTime < bestTime)
         {
             PlayerPrefsUtility.Save(key, elapsedTime);
+            _bestTime.text = GameUtility.SecondsToTimeString(GetBestTime());
         }
 
         base.DoWin();

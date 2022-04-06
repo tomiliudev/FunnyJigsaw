@@ -1008,6 +1008,7 @@ MonoBehaviour:
   soundDialog: {fileID: 8300000, guid: 3ca66b50b2c97470ea13e0567f885b55, type: 3}
   musicToggleUI: {fileID: 1115965314}
   soundToggleUI: {fileID: 365000622}
+  timeAttackButtonMask: {fileID: 0}
 --- !u!1001 &1312619063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1541,7 +1542,6 @@ GameObject:
   - component: {fileID: 2094388343}
   - component: {fileID: 2094388342}
   - component: {fileID: 2094388341}
-  - component: {fileID: 2094388340}
   - component: {fileID: 2094388344}
   m_Layer: 5
   m_Name: Button_Back
@@ -1570,22 +1570,6 @@ RectTransform:
   m_AnchoredPosition: {x: 56.96997, y: -41.100006}
   m_SizeDelta: {x: 90, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &2094388340
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094388338}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 7c0d44fe2822e42f4b7a409f5cedd8dd, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 7c0d44fe2822e42f4b7a409f5cedd8dd, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &2094388341
 MonoBehaviour:
   m_ObjectHideFlags: 0
