@@ -178,8 +178,9 @@ public class GameController : ControllerBase
 			}
 
 			LoadPuzzle(idx);
-            RestartPuzzle();
         }
+
+		RestartPuzzle();
 
 		// Load saved data
 		Load ();
@@ -846,33 +847,26 @@ public class GameController : ControllerBase
 	// Load puzzle (Assembled pieces)
 	public void Load ()
 	{
-		if (!puzzle)
-			return;
-		else
-			puzzle.LoadProgress(puzzle.name); 
+		if (!puzzle) return;
 
+		remainingHints = hintLimit;
+		remainingTime = timer;
 
-		if (_gameMode == GameMode.classic && PlayerPrefs.HasKey (puzzle.name + "_hints"))
-		{
-			remainingHints = PlayerPrefs.GetInt (puzzle.name + "_hints");
-			if (hintCounterUI)
-				hintCounterUI.text = remainingHints.ToString ();
-		} 
-		else
-		{
-			Debug.Log ("No saved data found for: " + puzzle.name + "_hints", gameObject);
-			remainingHints = hintLimit;  
-		}
+		if (_gameMode == GameMode.classic)
+        {
+			puzzle.LoadProgress(puzzle.name);
 
+			if (PlayerPrefs.HasKey(puzzle.name + "_hints"))
+			{
+				remainingHints = PlayerPrefs.GetInt(puzzle.name + "_hints");
+				if (hintCounterUI)
+					hintCounterUI.text = remainingHints.ToString();
+			}
 
-		if (PlayerPrefs.HasKey(puzzle.name + "_timer"))
-		{
-			remainingTime = PlayerPrefs.GetFloat(puzzle.name + "_timer");
-		}
-		else
-		{
-			Debug.Log("No saved data found for: " + puzzle.name + "_timer", gameObject);
-			remainingTime = timer;
+			if (PlayerPrefs.HasKey(puzzle.name + "_timer"))
+			{
+				remainingTime = PlayerPrefs.GetFloat(puzzle.name + "_timer");
+			}
 		}
 	}  
 
@@ -880,7 +874,7 @@ public class GameController : ControllerBase
 	// Save progress if player closes the application
 	public void OnApplicationQuit() 
 	{
-        if (_gameMode != GameMode.timeAttack)
+        if (_gameMode == GameMode.classic)
         {
 			Save();
 			PlayerPrefs.Save();
