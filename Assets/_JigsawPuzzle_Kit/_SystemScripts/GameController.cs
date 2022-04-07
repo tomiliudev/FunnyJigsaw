@@ -10,6 +10,7 @@ using UnityEngine.EventSystems;
 using UniRx;
 using System;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 public enum GameMode
 {
@@ -76,6 +77,7 @@ public class GameController : ControllerBase
 
 	// SimpleDialog
 	public SimpleDialog _dialog;
+	[SerializeField] SimpleDialog.DialogMessage[] dialogMessages;
 
 	// Important internal variables - please don't change them blindly
 	CameraController cameraScript;
@@ -120,7 +122,7 @@ public class GameController : ControllerBase
 		}
 	}
 
-	private void Start()
+	private async UniTaskVoid Start()
     {
         if (_gameMode == GameMode.classic)
         {
@@ -134,6 +136,25 @@ public class GameController : ControllerBase
 					ShowHintUI();
 				})
 			.AddTo(this);
+		}
+
+		if(dialogMessages != null && dialogMessages.Count() > 0)
+        {
+			bool isClick = false;
+			Observable.EveryUpdate()
+					.Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => isClick = true).AddTo(this);
+
+			foreach (SimpleDialog.DialogMessage message in dialogMessages)
+            {
+				_dialog.ShowDialogWithData(message);
+				float startTime = Time.time;
+				await UniTask.WaitUntil(() => isClick || Time.time > startTime + message.delay);
+				isClick = false;
+				_dialog.SwitchDialog(false);
+			}
+
+			// Dialog終わったら時間をリセットする
+			timerTime = Time.time + remainingTime;
 		}
     }
 
@@ -245,7 +266,7 @@ public class GameController : ControllerBase
 	{
 		if (Input.GetKeyUp(KeyCode.Escape)) Pause ();
 		
-		_inGameUI.SetActive(!gameFinished);
+		_inGameUI.SetActive(!gameFinished && !_dialog.IsDialogActive);
 
 		if (puzzle  &&  Time.timeScale > 0  &&  !gameFinished)
 		{
@@ -693,12 +714,12 @@ public class GameController : ControllerBase
 			}
 		}
 
+		_dialog.SwitchDialog(false);
+
 		if (winUI)
         {
 			winUI.SetActive(false);
 		}
-
-		_dialog.SwitchDialog(false);
 
 		PlayMusic(musicMain, true);
 		gameFinished = false;

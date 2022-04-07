@@ -3459,7 +3459,6 @@ GameObject:
   - component: {fileID: 1391049263}
   - component: {fileID: 1391049262}
   - component: {fileID: 1391049261}
-  - component: {fileID: 1391049260}
   - component: {fileID: 1391049264}
   m_Layer: 5
   m_Name: Button_Menu
@@ -3488,22 +3487,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -35}
   m_SizeDelta: {x: 90, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &1391049260
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1391049258}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 7c0d44fe2822e42f4b7a409f5cedd8dd, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 7c0d44fe2822e42f4b7a409f5cedd8dd, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &1391049261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3547,20 +3530,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1391049262}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: PlaySound
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: e8ecf2fb5786d44d3a129ba399919a11,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1391049262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5224,14 +5194,13 @@ GameObject:
   - component: {fileID: 2100686962}
   - component: {fileID: 2100686961}
   - component: {fileID: 2100686960}
-  - component: {fileID: 2100686959}
   m_Layer: 5
   m_Name: Button_Hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2100686958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5254,23 +5223,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &2100686959
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 11124166, guid: 86dcb78e758964e2889fde05d9f88f02,
-    type: 2}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2100686957}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 7c0d44fe2822e42f4b7a409f5cedd8dd, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 7c0d44fe2822e42f4b7a409f5cedd8dd, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &2100686960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5315,32 +5267,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2100686961}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ShowHint
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: PlaySound
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: e8ecf2fb5786d44d3a129ba399919a11,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2100686961
 MonoBehaviour:
   m_ObjectHideFlags: 0

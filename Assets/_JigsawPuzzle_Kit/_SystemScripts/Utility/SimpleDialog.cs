@@ -7,7 +7,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-
+using Cysharp.Threading.Tasks;
+using System;
 
 public class SimpleDialog : MonoBehaviour 
 {
@@ -46,47 +47,55 @@ public class SimpleDialog : MonoBehaviour
 	Animation anim;
 
 
+	public bool IsDialogActive
+    {
+        get
+        {
+			return messageWindow.activeSelf;
+		}
+    }
+
 	//================================================================================================
 	// Process world-wrapping by "<br>" symbol and according to lineLength
 	void Start () 
 	{
-		lineLengthLimit++;
-		for (int i = 0; i < messages.Length; i++ )
-		{
-			messages[i].text = messages[i].text.Replace("<br>","\n");
-			if (lineLengthLimit > 1) 
-				for (int j = 1; j <= messages[i].text.Length/lineLengthLimit; j++)
-					messages[i].text = messages[i].text.Insert(j*lineLengthLimit-1, "\n");
-		}   
+		//lineLengthLimit++;
+		//for (int i = 0; i < messages.Length; i++ )
+		//{
+		//	messages[i].text = messages[i].text.Replace("<br>","\n");
+		//	if (lineLengthLimit > 1) 
+		//		for (int j = 1; j <= messages[i].text.Length/lineLengthLimit; j++)
+		//			messages[i].text = messages[i].text.Insert(j*lineLengthLimit-1, "\n");
+		//}   
 
 
-		anim = messageWindow.GetComponent<Animation> ();
-		if (anim)
-			if (defaultAnimation)
-				anim.clip = defaultAnimation;
-			else 
-				if (anim.clip)
-					defaultAnimation = anim.clip;
+		//anim = messageWindow.GetComponent<Animation> ();
+		//if (anim)
+		//	if (defaultAnimation)
+		//		anim.clip = defaultAnimation;
+		//	else 
+		//		if (anim.clip)
+		//			defaultAnimation = anim.clip;
 
 
-		messageWindow.SetActive(true);
-		if (nextButton) nextButton.gameObject.SetActive(true); 
-		if (backgroundPanel) backgroundPanel.SetActive(true);
+		//messageWindow.SetActive(true);
+		//if (nextButton) nextButton.gameObject.SetActive(true); 
+		//if (backgroundPanel) backgroundPanel.SetActive(true);
 
-        if (pauseGame)
-            Time.timeScale = 0;
+  //      if (pauseGame)
+  //          Time.timeScale = 0;
 
 
-        NextMessage();
+        //NextMessage();
 	}
 
 	//-----------------------------------------------------------------------------------------------------	
 	// Go to next message when current message delay expired or  player click/touch screen
 	void Update () 
 	{
-		if (currentMessage < messages.Length)
-			if ( (!nextButton  &&  Input.GetMouseButtonUp(0))   ||   (!pauseGame  &&  messages[currentMessage].delay > -1  &&  timeToNextMessage < Time.time) ) 
-				NextMessage();		
+		//if (currentMessage < messages.Length)
+		//	if ( (!nextButton  &&  Input.GetMouseButtonUp(0))   ||   (!pauseGame  &&  messages[currentMessage].delay > -1  &&  timeToNextMessage < Time.time) ) 
+		//		NextMessage();		
 	}
 
 	//-----------------------------------------------------------------------------------------------------	
@@ -162,10 +171,20 @@ public class SimpleDialog : MonoBehaviour
 	 */
 	public void ShowDialog(string text, int characterId, bool inverted)
     {
+		anim = messageWindow.GetComponent<Animation>();
 		messageWindow.SetActive(false);
 		messageText.text = text;
 		messageCharacter.sprite = characters[characterId];
 		anim.clip = inverted ? invertedAnimation : defaultAnimation;
+		messageWindow.SetActive(true);
+	}
+
+	public void ShowDialogWithData(DialogMessage data)
+	{
+		anim = messageWindow.GetComponent<Animation>();
+        messageText.text = data.text;
+		messageCharacter.sprite = characters[data.characterId];
+		anim.clip = data.inverted ? invertedAnimation : defaultAnimation;
 		messageWindow.SetActive(true);
 	}
 

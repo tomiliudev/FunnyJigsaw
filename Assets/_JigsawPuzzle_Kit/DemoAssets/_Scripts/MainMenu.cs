@@ -22,14 +22,24 @@ public class MainMenu : MonoBehaviour
 	public Toggle soundToggleUI;
 
 	[SerializeField] GameObject timeAttackButtonMask;
+	[SerializeField] SimpleDialog _dialog;
 
 
 
 	//=====================================================================================================
 	protected void Start () 
 	{
+        if (_dialog)
+        {
+            int isShowed = PlayerPrefsUtility.Load(GameConfig.WelcomeDialogKey, 0);
+            if (isShowed <= 0)
+            {
+                _dialog.ShowDialog("\nようこそ！ファミリーパズル", 0, false);
+                PlayerPrefsUtility.Save(GameConfig.WelcomeDialogKey, 1);
+            }
+        }
 
-		List<string> clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
+        List<string> clearedPuzzles = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearedPuzzlesKey);
 		if(timeAttackButtonMask != null) timeAttackButtonMask.SetActive(clearedPuzzles.Count < 5);
 
 		// Prepare AudioSources for soundPlayer and musicPlayer
