@@ -111,15 +111,7 @@ public class GameController : ControllerBase
 
 	void ShowHintUI()
     {
-		if (hintCounterUI)
-		{
-			if (hintCounterUI.transform.parent)
-				hintCounterUI.transform.parent.gameObject.SetActive(remainingHints > 0);
-
-			hintCounterUI.transform.gameObject.SetActive(remainingHints > 0);
-
-			hintCounterUI.text = remainingHints.ToString();
-		}
+		if (hintCounterUI) hintCounterUI.text = remainingHints.ToString();
 	}
 
 	private async UniTaskVoid Start()
@@ -589,18 +581,12 @@ public class GameController : ControllerBase
     // Show Hint and update remainingHints
     public void ShowHint () 
 	{
-        if (gameFinished  ||  remainingHints == 0)  return;
-         else
-            puzzle.ReturnPiece (-1);
+        if (gameFinished  ||  remainingHints <= 0)  return;
 
-        remainingHints--;
+		remainingHints--;
+		PlayerPrefsUtility.Save(GameConfig.HintCountKey, remainingHints);
 
-        if (remainingHints == 0)
-           if (hintCounterUI)
-                hintCounterUI.transform.parent.gameObject.SetActive(false);
-           else
-                hintCounterUI.transform.gameObject.SetActive(false);
-
+		puzzle.ReturnPiece (-1);
 
         if (hintCounterUI) 
 			hintCounterUI.text = remainingHints.ToString();
@@ -675,15 +661,13 @@ public class GameController : ControllerBase
 
         puzzle.ResetProgress(puzzle.name);
 
-        remainingHints = hintLimit;
+        remainingHints = GetHintCount();
         timerTime = Time.time + timer;
 
-        PlayerPrefs.SetInt(puzzle.name + "_hints", hintLimit);
         PlayerPrefs.SetFloat(puzzle.name + "_timer", timer);
 
         if (hintCounterUI)
         {
-            hintCounterUI.gameObject.SetActive(remainingHints > 0);
             hintCounterUI.text = remainingHints.ToString();
         }
 
@@ -743,7 +727,6 @@ public class GameController : ControllerBase
 		{
 			PlayerPrefs.SetString (puzzle.name, "");
 			PlayerPrefs.DeleteKey (puzzle.name + "_Positions");
-			PlayerPrefs.SetInt (puzzle.name + "_hints", hintLimit);
 			PlayerPrefs.SetFloat (puzzle.name + "_timer", timer);
 		}
 
@@ -859,7 +842,6 @@ public class GameController : ControllerBase
 		{
 			Debug.Log($"puzzle.name = {puzzle.name}");
 			puzzle.SaveProgress (puzzle.name);
-			PlayerPrefs.SetInt (puzzle.name + "_hints", remainingHints);
 			PlayerPrefs.SetFloat (puzzle.name + "_timer", timer - elapsedTime);
 		}
 	}
@@ -870,26 +852,19 @@ public class GameController : ControllerBase
 	{
 		if (!puzzle) return;
 
-		remainingHints = hintLimit;
+		remainingHints = GetHintCount();
 		remainingTime = timer;
 
 		if (_gameMode == GameMode.classic)
         {
 			puzzle.LoadProgress(puzzle.name);
 
-			if (PlayerPrefs.HasKey(puzzle.name + "_hints"))
-			{
-				remainingHints = PlayerPrefs.GetInt(puzzle.name + "_hints");
-				if (hintCounterUI)
-					hintCounterUI.text = remainingHints.ToString();
-			}
-
 			if (PlayerPrefs.HasKey(puzzle.name + "_timer"))
 			{
 				remainingTime = PlayerPrefs.GetFloat(puzzle.name + "_timer");
 			}
 		}
-	}  
+	}
 
 	//-----------------------------------------------------------------------------------------------------	
 	// Save progress if player closes the application
@@ -902,5 +877,11 @@ public class GameController : ControllerBase
 		}
 	}
 
-	//-----------------------------------------------------------------------------------------------------	
+	//-----------------------------------------------------------------------------------------------------
+
+
+	private int GetHintCount()
+    {
+		return PlayerPrefsUtility.Load(GameConfig.HintCountKey, 3);
+    }
 }

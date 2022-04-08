@@ -7,4 +7,5 @@ public sealed class GameConfig
 {
     public readonly static string ClearedPuzzlesKey = "ClearedPuzzles";
     public readonly static string WelcomeDialogKey = DialogId.welcomeDialog.ToString();
+    public readonly static string HintCountKey = "HintCount";
 }
