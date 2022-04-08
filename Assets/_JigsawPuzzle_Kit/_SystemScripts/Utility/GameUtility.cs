@@ -14,4 +14,9 @@ public sealed class GameUtility : MonoBehaviour
 
 		return hours_tmp.ToString() + ":" + minutes_tmp.ToString() + ":" + seconds_tmp.ToString("00");
 	}
+
+	public static int GetHintCount()
+    {
+		return PlayerPrefsUtility.Load(GameConfig.HintCountKey, 3);
+	}
 }

@@ -59,13 +59,11 @@ public class GameController : ControllerBase
 	[SerializeField] GameObject _inGameUI;
 
 	// Music-related
-	public AudioSource musicPlayer; 
 	public AudioClip musicMain;
 	public AudioClip musicWin;
 	public AudioClip musicLose;
 
 	// Sound-related
-	public AudioSource soundPlayer; 
 	public AudioClip soundGrab;
 	public AudioClip soundDrop;
 	public AudioClip soundAssemble;
@@ -661,7 +659,7 @@ public class GameController : ControllerBase
 
         puzzle.ResetProgress(puzzle.name);
 
-        remainingHints = GetHintCount();
+        remainingHints = GameUtility.GetHintCount();
         timerTime = Time.time + timer;
 
         PlayerPrefs.SetFloat(puzzle.name + "_timer", timer);
@@ -852,7 +850,7 @@ public class GameController : ControllerBase
 	{
 		if (!puzzle) return;
 
-		remainingHints = GetHintCount();
+		remainingHints = GameUtility.GetHintCount();
 		remainingTime = timer;
 
 		if (_gameMode == GameMode.classic)
@@ -878,10 +876,4 @@ public class GameController : ControllerBase
 	}
 
 	//-----------------------------------------------------------------------------------------------------
-
-
-	private int GetHintCount()
-    {
-		return PlayerPrefsUtility.Load(GameConfig.HintCountKey, 3);
-    }
 }

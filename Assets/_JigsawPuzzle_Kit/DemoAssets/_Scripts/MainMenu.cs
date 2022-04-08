@@ -9,12 +9,8 @@ using UnityEngine.SceneManagement;
 
 
 
-public class MainMenu : MonoBehaviour 
+public class MainMenu : ControllerBase 
 {
-
-	public AudioSource musicPlayer; 
-	public AudioSource soundPlayer; 
-
 	public AudioClip musicMain;
 	public AudioClip soundClick;
 	public AudioClip soundDialog;
