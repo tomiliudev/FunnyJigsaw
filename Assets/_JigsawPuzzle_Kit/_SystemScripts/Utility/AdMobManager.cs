@@ -80,6 +80,12 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
     public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args)
     {
         Debug.Log("HandleRewardedAdFailedToShow");
+        CreateAndLoadRewardedAd();
+
+        SetupMusicPlayer();
+        _musicPlayer.Play();
+
+        Time.timeScale = 1f;
     }
 
     public void HandleRewardedAdClosed(object sender, EventArgs args)
@@ -95,17 +101,6 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
         Time.timeScale = 1f;
     }
 
-    private async UniTaskVoid ShowDialogAsync()
-    {
-        SetupDialog();
-        await _dialog.ShowDialogWithData(new SimpleDialog.DialogMessage()
-        {
-            text = $"おめでとうございます！\nヒントの数が{_addHintCount}増えました！",
-            delay = 5,
-            characterId = 0
-        });
-    }
-
     public void HandleUserEarnedReward(object sender, Reward args)
     {
         Debug.Log("HandleUserEarnedReward");
@@ -117,6 +112,17 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
 
         SetupModel();
         if(_model != null) _model.UpdateRemainingHint(hintCount + _addHintCount);
+    }
+
+    private async UniTaskVoid ShowDialogAsync()
+    {
+        SetupDialog();
+        await _dialog.ShowDialogWithData(new SimpleDialog.DialogMessage()
+        {
+            text = $"おめでとうございます！\nヒントの数が{_addHintCount}増えました！",
+            delay = 5,
+            characterId = 0
+        });
     }
 
     private void SetupMusicPlayer()
