@@ -1,16 +1,15 @@
 ﻿//-----------------------------------------------------------------------------------------------------	
 // Script controls whole gameplay, UI and all sounds
 //-----------------------------------------------------------------------------------------------------	
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
-using UniRx;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using UniRx;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameMode
 {
@@ -83,7 +82,6 @@ public class GameController : ControllerBase
 	float _time;
 	protected float remainingTime, elapsedTime;
 	bool gameFinished = false;
-    int remainingHints;
 	Color backgroundColor;
 	static Vector3 oldPointerPosition;
 
@@ -107,11 +105,6 @@ public class GameController : ControllerBase
 		}
     }
 
-	void ShowHintUI()
-    {
-		if (hintCounterUI) hintCounterUI.text = remainingHints.ToString();
-	}
-
 	private async UniTaskVoid Start()
     {
         if (_gameMode == GameMode.classic)
@@ -123,9 +116,17 @@ public class GameController : ControllerBase
 				{
 					LoadPuzzle(idx);
 					RestartPuzzle();
-					ShowHintUI();
 				})
 			.AddTo(this);
+
+			_model.RemainingHint
+				.Subscribe(
+					remainingHint =>
+                    {
+						if(hintCounterUI) hintCounterUI.text = remainingHint.ToString();
+					}
+				)
+				.AddTo(this);
 		}
 
 		if(dialogMessages != null && dialogMessages.Count() > 0)
@@ -203,8 +204,6 @@ public class GameController : ControllerBase
         {
 			startTime = Time.time;
 		}
-
-		ShowHintUI();
 
 		// Init timer
 		Time.timeScale = 1.0f;
@@ -568,19 +567,18 @@ public class GameController : ControllerBase
 	{
         if (gameFinished) return;
 
-        if (remainingHints <= 0)
+		int remainingHints = _model.RemainingHint.Value;
+		if (remainingHints <= 0)
         {
 			SwitchOnHintUi();
 			return;
         }
 
 		remainingHints--;
+		_model.UpdateRemainingHint(remainingHints);
 		PlayerPrefsUtility.Save(GameConfig.HintCountKey, remainingHints);
 
 		puzzle.ReturnPiece (-1);
-
-        if (hintCounterUI) 
-			hintCounterUI.text = remainingHints.ToString();
 		
 		if (soundPlayer  &&  soundPlayer.enabled) 
 			soundPlayer.PlayOneShot(soundAssemble);
@@ -671,15 +669,9 @@ public class GameController : ControllerBase
 
         puzzle.ResetProgress(puzzle.name);
 
-        remainingHints = GameUtility.GetHintCount();
 		_time = 0f;
 
         PlayerPrefs.SetFloat(puzzle.name + "_timer", timer);
-
-        if (hintCounterUI)
-        {
-            hintCounterUI.text = remainingHints.ToString();
-        }
 
         puzzle.DecomposePuzzle();      
 
@@ -862,7 +854,8 @@ public class GameController : ControllerBase
 	{
 		if (!puzzle) return;
 
-		remainingHints = GameUtility.GetHintCount();
+		_model.UpdateRemainingHint(GameUtility.GetHintCount());
+
 		remainingTime = timer;
 
 		if (_gameMode == GameMode.classic)

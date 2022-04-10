@@ -10,4 +10,12 @@ public sealed class PuzzleClassicModel : MonoBehaviour
     {
         _currentPuzzleIdx.Value = idx;
     }
+
+    IntReactiveProperty _remainingHint = new IntReactiveProperty(0);
+    public IReadOnlyReactiveProperty<int> RemainingHint => _remainingHint;
+
+    public void UpdateRemainingHint(int remainingHint)
+    {
+        _remainingHint.Value = remainingHint;
+    }
 }

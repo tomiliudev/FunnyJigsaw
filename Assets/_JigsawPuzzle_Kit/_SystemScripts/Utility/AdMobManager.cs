@@ -8,6 +8,7 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
     private AudioSource _musicPlayer;
     private SimpleDialog _dialog;
     private int _addHintCount = 3;
+    private PuzzleClassicModel _model;
 
     private RewardedAd rewardedAd;
     public RewardedAd RewardedAd => rewardedAd;
@@ -113,6 +114,9 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
 
         int hintCount = GameUtility.GetHintCount();
         PlayerPrefsUtility.Save(GameConfig.HintCountKey, hintCount + _addHintCount);
+
+        SetupModel();
+        if(_model != null) _model.UpdateRemainingHint(hintCount + _addHintCount);
     }
 
     private void SetupMusicPlayer()
@@ -127,5 +131,11 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
         if (_dialog != null) return;
         var controller = FindObjectOfType<ControllerBase>();
         _dialog = controller._dialog;
+    }
+
+    private void SetupModel()
+    {
+        if (_model != null) return;
+        _model = FindObjectOfType<PuzzleClassicModel>();
     }
 }
