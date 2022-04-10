@@ -18,7 +18,6 @@ public class MainMenu : ControllerBase
 	public Toggle soundToggleUI;
 
 	[SerializeField] GameObject timeAttackButtonMask;
-	[SerializeField] SimpleDialog _dialog;
 
 
 

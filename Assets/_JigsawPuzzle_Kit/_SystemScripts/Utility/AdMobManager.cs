@@ -5,6 +5,9 @@ using UnityEngine;
 public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
 {
     private AudioSource _musicPlayer;
+    private SimpleDialog _dialog;
+    private int _addHintCount = 3;
+
     private RewardedAd rewardedAd;
     public RewardedAd RewardedAd => rewardedAd;
 
@@ -84,6 +87,13 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
 
         SetupMusicPlayer();
         _musicPlayer.Play();
+
+        SetupDialog();
+        _dialog.ShowDialogWithData(new SimpleDialog.DialogMessage() {
+            text = $"おめでとうございます！\nヒントの数が{_addHintCount}増えました！",
+            delay = 5,
+            characterId = 0
+        });
     }
 
     public void HandleUserEarnedReward(object sender, Reward args)
@@ -93,7 +103,7 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
         double amount = args.Amount;
 
         int hintCount = GameUtility.GetHintCount();
-        PlayerPrefsUtility.Save(GameConfig.HintCountKey, hintCount + 3);
+        PlayerPrefsUtility.Save(GameConfig.HintCountKey, hintCount + _addHintCount);
     }
 
     private void SetupMusicPlayer()
@@ -101,5 +111,12 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
         if (_musicPlayer != null) return;
         var controller = FindObjectOfType<ControllerBase>();
         _musicPlayer = controller.musicPlayer;
+    }
+
+    private void SetupDialog()
+    {
+        if (_dialog != null) return;
+        var controller = FindObjectOfType<ControllerBase>();
+        _dialog = controller._dialog;
     }
 }

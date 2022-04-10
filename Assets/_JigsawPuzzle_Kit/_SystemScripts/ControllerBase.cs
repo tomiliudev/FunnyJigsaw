@@ -6,6 +6,7 @@ public class ControllerBase : MonoBehaviour
 {
     public AudioSource musicPlayer;
     public AudioSource soundPlayer;
+    public SimpleDialog _dialog;
 
     public class BaseInitData
     {
