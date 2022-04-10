@@ -74,7 +74,6 @@ public class GameController : ControllerBase
 	public bool invertRules = false;    // Allows to invert basic rules - i.e. player should decompose  the images
 
 	// SimpleDialog
-	public SimpleDialog _dialog;
 	[SerializeField] SimpleDialog.DialogMessage[] dialogMessages;
 
 	// Important internal variables - please don't change them blindly
@@ -130,17 +129,9 @@ public class GameController : ControllerBase
 
 		if(dialogMessages != null && dialogMessages.Count() > 0)
         {
-			bool isClick = false;
-			Observable.EveryUpdate()
-					.Where(_ => Input.GetMouseButtonDown(0)).Subscribe(_ => isClick = true).AddTo(this);
-
 			foreach (SimpleDialog.DialogMessage message in dialogMessages)
             {
-				_dialog.ShowDialogWithData(message);
-				float startTime = Time.time;
-				await UniTask.WaitUntil(() => isClick || Time.time > startTime + message.delay);
-				isClick = false;
-				_dialog.SwitchDialog(false);
+				await _dialog.ShowDialogWithData(message);
 			}
 
 			// Dialog終わったら時間をリセットする

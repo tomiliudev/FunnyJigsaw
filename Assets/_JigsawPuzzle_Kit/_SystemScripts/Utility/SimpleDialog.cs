@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Cysharp.Threading.Tasks;
 using System;
+using UniRx;
 
 public class SimpleDialog : MonoBehaviour 
 {
@@ -24,8 +25,6 @@ public class SimpleDialog : MonoBehaviour
 		public bool inverted;			// Use inverted position/animation for  dialog window or not
 		public UnityEvent startAction;	// Call the event at message
 	}
-
-
 
 	public GameObject messageWindow;			// Link to Dialog visualization object
 	public Image messageCharacter;				// Link to spritededicated for character rendering
@@ -45,6 +44,8 @@ public class SimpleDialog : MonoBehaviour
 	int currentMessage = -1;
 	float timeToNextMessage;
 	Animation anim;
+
+	bool isClick = false;
 
 
 	public bool IsDialogActive
@@ -82,11 +83,22 @@ public class SimpleDialog : MonoBehaviour
 		//if (nextButton) nextButton.gameObject.SetActive(true); 
 		//if (backgroundPanel) backgroundPanel.SetActive(true);
 
-  //      if (pauseGame)
-  //          Time.timeScale = 0;
+		//      if (pauseGame)
+		//          Time.timeScale = 0;
 
 
-        //NextMessage();
+		//NextMessage();
+
+		Observable.EveryUpdate()
+			.Where(_ => Input.GetMouseButtonDown(0))
+			.Subscribe(
+				_ =>
+				{
+					if (!IsDialogActive) return;
+					isClick = true;
+				}
+			)
+			.AddTo(this);
 	}
 
 	//-----------------------------------------------------------------------------------------------------	
@@ -179,13 +191,22 @@ public class SimpleDialog : MonoBehaviour
 		messageWindow.SetActive(true);
 	}
 
-	public void ShowDialogWithData(DialogMessage data)
+	public async UniTask ShowDialogWithData(DialogMessage data)
 	{
-		anim = messageWindow.GetComponent<Animation>();
+        if (anim == null)
+        {
+			anim = messageWindow.GetComponent<Animation>();
+		}
+
+		float startTime = Time.time;
         messageText.text = data.text;
 		messageCharacter.sprite = characters[data.characterId];
 		anim.clip = data.inverted ? invertedAnimation : defaultAnimation;
 		messageWindow.SetActive(true);
+
+		await UniTask.WaitUntil(() => isClick || Time.time > startTime + data.delay);
+		isClick = false;
+		messageWindow.SetActive(false);
 	}
 
 	public void SwitchDialog(bool flag)

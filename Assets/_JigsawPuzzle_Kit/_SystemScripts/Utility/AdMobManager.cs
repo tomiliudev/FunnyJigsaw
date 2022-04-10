@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
@@ -88,8 +89,14 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
         SetupMusicPlayer();
         _musicPlayer.Play();
 
+        ShowDialogAsync().Forget();
+    }
+
+    private async UniTaskVoid ShowDialogAsync()
+    {
         SetupDialog();
-        _dialog.ShowDialogWithData(new SimpleDialog.DialogMessage() {
+        await _dialog.ShowDialogWithData(new SimpleDialog.DialogMessage()
+        {
             text = $"おめでとうございます！\nヒントの数が{_addHintCount}増えました！",
             delay = 5,
             characterId = 0
