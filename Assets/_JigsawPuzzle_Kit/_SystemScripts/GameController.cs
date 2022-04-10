@@ -50,6 +50,7 @@ public class GameController : ControllerBase
 	public GameObject pauseUI;
 	public GameObject winUI;
 	public GameObject loseUI;
+	public GameObject addHintUI;
 	public Text hintCounterUI;
 	public Text timerCounterUI;
 	public Text piecesLeftUI;
@@ -79,7 +80,7 @@ public class GameController : ControllerBase
 	// Important internal variables - please don't change them blindly
 	CameraController cameraScript;
 	float startTime = 0f;
-	float timerTime = 20.0f;
+	float _time;
 	protected float remainingTime, elapsedTime;
 	bool gameFinished = false;
     int remainingHints;
@@ -133,9 +134,6 @@ public class GameController : ControllerBase
             {
 				await _dialog.ShowDialogWithData(message);
 			}
-
-			// Dialog終わったら時間をリセットする
-			timerTime = Time.time + remainingTime;
 		}
     }
 
@@ -209,7 +207,6 @@ public class GameController : ControllerBase
 		ShowHintUI();
 
 		// Init timer
-		timerTime = Time.time + remainingTime;
 		Time.timeScale = 1.0f;
 
 		Cursor.lockState = CursorLockMode.Confined;
@@ -464,7 +461,6 @@ public class GameController : ControllerBase
 			backgroundColor.a = Mathf.Lerp (backgroundColor.a, 1.0f, Time.deltaTime); 
 			background.material.color = backgroundColor;
 		}
-
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 
@@ -570,7 +566,13 @@ public class GameController : ControllerBase
     // Show Hint and update remainingHints
     public void ShowHint () 
 	{
-        if (gameFinished  ||  remainingHints <= 0)  return;
+        if (gameFinished) return;
+
+        if (remainingHints <= 0)
+        {
+			SwitchOnHintUi();
+			return;
+        }
 
 		remainingHints--;
 		PlayerPrefsUtility.Save(GameConfig.HintCountKey, remainingHints);
@@ -582,7 +584,18 @@ public class GameController : ControllerBase
 		
 		if (soundPlayer  &&  soundPlayer.enabled) 
 			soundPlayer.PlayOneShot(soundAssemble);
-		
+	}
+
+	public void SwitchOnHintUi()
+    {
+		if (addHintUI != null) addHintUI.SetActive(true);
+		Time.timeScale = 0f;
+	}
+
+	public void SwitchOffHintUi()
+    {
+		if (addHintUI != null) addHintUI.SetActive(false);
+		Time.timeScale = 1f;
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 
@@ -590,12 +603,20 @@ public class GameController : ControllerBase
 	void ProcessTimer () 
 	{
 		if (timer > 0 && gameFinished == false)
-			if (timerTime < Time.time)
+        {
+			if (_dialog.IsDialogActive)
+            {
+				return;
+            }
+
+			_time += Time.deltaTime;
+
+			if (timer < _time)
 			{ // Lose game if time is out
 				PlayMusic(musicLose, false);
 
 				if (loseUI)
-                {
+				{
 					loseUI.SetActive(true);
 				}
 
@@ -604,17 +625,18 @@ public class GameController : ControllerBase
 				gameFinished = true;
 			}
 			else
-			{				
+			{
 				if (timerCounterUI)
 				{
-					float minutes_tmp = (int)(Mathf.Abs(Time.time - timerTime) / 60);
-					float seconds_tmp = (int)(Mathf.Abs(Time.time - timerTime) % 60);
+					float minutes_tmp = (int)(Mathf.Abs(_time - timer) / 60);
+					float seconds_tmp = (int)(Mathf.Abs(_time - timer) % 60);
 
 					seconds_tmp = (seconds_tmp == 60) ? 0 : seconds_tmp;
 
 					timerCounterUI.text = minutes_tmp.ToString() + ":" + seconds_tmp.ToString("00");
 				}
 			}
+		}
     }
 
 	//-----------------------------------------------------------------------------------------------------	 
@@ -635,7 +657,6 @@ public class GameController : ControllerBase
             if (pauseUI) 
 				pauseUI.SetActive(false);
 		}
-
 	}
 
 
@@ -651,7 +672,7 @@ public class GameController : ControllerBase
         puzzle.ResetProgress(puzzle.name);
 
         remainingHints = GameUtility.GetHintCount();
-        timerTime = Time.time + timer;
+		_time = 0f;
 
         PlayerPrefs.SetFloat(puzzle.name + "_timer", timer);
 

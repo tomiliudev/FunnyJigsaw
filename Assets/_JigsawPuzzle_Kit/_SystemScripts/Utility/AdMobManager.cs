@@ -90,6 +90,8 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
         _musicPlayer.Play();
 
         ShowDialogAsync().Forget();
+
+        Time.timeScale = 1f;
     }
 
     private async UniTaskVoid ShowDialogAsync()
