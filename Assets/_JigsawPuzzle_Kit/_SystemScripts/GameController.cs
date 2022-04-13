@@ -85,6 +85,7 @@ public class GameController : ControllerBase
 	Color backgroundColor;
 	static Vector3 oldPointerPosition;
 
+	AdMobManager _admobManager;
 
 	void LoadPuzzle(int idx)
     {
@@ -109,6 +110,8 @@ public class GameController : ControllerBase
     {
         if (_gameMode == GameMode.classic)
         {
+			_admobManager = FindObjectOfType<AdMobManager>();
+
 			_model.CurrentPuzzleIdx
 			.SkipLatestValueOnSubscribe()// Subscribe時のOnNextをSkip
 			.Subscribe(
@@ -116,6 +119,12 @@ public class GameController : ControllerBase
 				{
 					LoadPuzzle(idx);
 					RestartPuzzle();
+
+					if (_admobManager.Interstitial.IsLoaded())
+					{
+						int rand = UnityEngine.Random.Range(0, 100);
+						if(rand >= 50) _admobManager.Interstitial.Show();
+					}
 				})
 			.AddTo(this);
 
@@ -149,7 +158,6 @@ public class GameController : ControllerBase
 		
 		gameCamera.orthographic = true;
 		cameraScript = gameCamera.GetComponent<CameraController>();
-
 
 		// Prepare AudioSources for soundPlayer and musicPlayer
 		if (!soundPlayer   &&   (soundGrab  ||  soundDrop  ||  soundAssemble))
@@ -205,9 +213,6 @@ public class GameController : ControllerBase
 			startTime = Time.time;
 		}
 
-		// Init timer
-		Time.timeScale = 1.0f;
-
 		Cursor.lockState = CursorLockMode.Confined;
 
         if (!puzzle)
@@ -223,7 +228,6 @@ public class GameController : ControllerBase
             PrepareBackground(background);
         }
 
-
         // Align with Camera if needed
         if (alignWithCamera)
             puzzle.AlignWithCameraCenter(gameCamera, (puzzle.anchoring == PuzzleAnchor.Center), true);
@@ -234,7 +238,6 @@ public class GameController : ControllerBase
             puzzle.FitToScreen(gameCamera, fitToScreenAnchor);
             cameraScript.ReInit();
         }
-
     }
 
 	//-----------------------------------------------------------------------------------------------------	
@@ -801,7 +804,6 @@ public class GameController : ControllerBase
 			
 			PlayerPrefs.SetInt("SoundPlayer", _enabled ? 1 : 0);
 		}
-
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 
@@ -814,7 +816,6 @@ public class GameController : ControllerBase
 			musicPlayer.clip = _music;
 			musicPlayer.Play();
 		}
-
 	}
 
 	public void PlayMusic (AudioClip _music) 
@@ -824,7 +825,6 @@ public class GameController : ControllerBase
 			musicPlayer.clip = _music;
 			musicPlayer.Play();
 		}
-
 	}
 
 	//-----------------------------------------------------------------------------------------------------	 
