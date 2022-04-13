@@ -19,12 +19,15 @@ public class MainMenu : ControllerBase
 
 	[SerializeField] GameObject timeAttackButtonMask;
 
-
+	AdMobManager _admobManager;
 
 	//=====================================================================================================
 	protected void Start () 
 	{
-        if (_dialog)
+		_admobManager = FindObjectOfType<AdMobManager>();
+		_admobManager.RequestBanner();
+
+		if (_dialog)
         {
             int isShowed = PlayerPrefsUtility.Load(GameConfig.WelcomeDialogKey, 0);
             if (isShowed <= 0)
@@ -46,14 +49,21 @@ public class MainMenu : ControllerBase
 			PlayMusic (musicMain); 
 		} 
 
-
 		LoadAudioActivity(); 
 	}
 
+    private void OnDestroy()
+    {
+        if (_admobManager.BannerView != null)
+        {
+			_admobManager.BannerView.Destroy();
+		}
+	}
 
-	//-----------------------------------------------------------------------------------------------------	 
-	// Load custom level
-	void LoadLevel (int _levelId) 
+
+    //-----------------------------------------------------------------------------------------------------	 
+    // Load custom level
+    void LoadLevel (int _levelId) 
 	{
 		Time.timeScale = 1;
 		SceneManager.LoadScene(_levelId);
