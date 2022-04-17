@@ -163,73 +163,72 @@ public class PuzzleController : MonoBehaviour
 
     //-----------------------------------------------------------------------------------------------------	
     // Process puzzle during gameplay (including user input)
-    public PuzzleState ProcessPuzzle (Vector3 _pointerPosition, bool _dragInput, float _rotationDirection)
+    public PuzzleState ProcessPuzzle(Vector3 _pointerPosition, bool _dragInput, float _rotationDirection)
     {
-        if (IsAssembled()) 
+        if (IsAssembled())
             return PuzzleState.PuzzleAssembled;
-        else 
+        else
             state = PuzzleState.None;
 
         //TODO: Move to an option
         _dragInput |= (_rotationDirection != 0);
 
+
         // Check is any piece clicked and get it Id 
-        if (_dragInput  &&  currentPiece < 0) 
+        if (_dragInput && currentPiece < 0)
         {
             if (Time.time < (grabTime + 0.1f)) return PuzzleState.None;
+
 
             _pointerPosition.z = 0;
             currentPiece = GetPointedPieceId(_pointerPosition, true);
 
-            if (currentPiece >= 0) 
+            if (currentPiece >= 0)
             {
-                if (enablePiecesGroups) 
+                if (enablePiecesGroups)
                 {
-                    currentObject = PuzzlePieceGroup.GetGroupObjectIfPossible (pieces [currentPiece].transform.gameObject);
+                    currentObject = PuzzlePieceGroup.GetGroupObjectIfPossible(pieces[currentPiece].transform.gameObject);
                     currentObjectTransform = currentObject.transform;
-                    currentGroup = currentObject.GetComponent<PuzzlePieceGroup> ();
-                } 
-                else 
+                    currentGroup = currentObject.GetComponent<PuzzlePieceGroup>();
+                }
+                else
                 {
-                    currentObject = pieces [currentPiece].transform.gameObject;
-                    currentObjectTransform = pieces [currentPiece].transform;
+                    currentObject = pieces[currentPiece].transform.gameObject;
+                    currentObjectTransform = pieces[currentPiece].transform;
                 }
 
                 // Piece center position offset from pointer (don't work for groups)
                 if (currentGroup)
-                {
                     pieceCenterOffset = Vector2.zero;
-                }
-                else if (centerDraggedPiece)
-                {
-                    pieceCenterOffset = pieces[currentPiece].GetPieceCenterOffset();
-                }
                 else
-                {
+                   if (centerDraggedPiece)
+                    pieceCenterOffset = pieces[currentPiece].GetPieceCenterOffset();
+                else
                     pieceCenterOffset = new Vector2(_pointerPosition.x - pieces[currentPiece].transform.position.x, _pointerPosition.y - pieces[currentPiece].transform.position.y);
-                }
+
+
 
                 // Add Drag offset 
                 if (!changeOnlyRotation && !swapPuzzleMode)
-                {
                     currentObjectTransform.position = new Vector3(_pointerPosition.x - pieceCenterOffset.x, _pointerPosition.y - pieceCenterOffset.y, currentObjectTransform.position.z - dragOffsetZ);
-                }
 
                 state = PuzzleState.DragPiece;
                 grabTime = Time.time;
             }
+
         }
-        else if(swapPuzzleMode && Input.GetMouseButtonDown(0) && swapPiece < 0)
+        else
+            if (swapPuzzleMode && Input.GetMouseButtonDown(0) && swapPiece < 0)
         {
             // Debug.Log(swapPiece);
             swapPiece = GetPointedPieceId(_pointerPosition, true);
 
-            if (swapPiece >= 0  &&  swapPiece != currentPiece)
+            if (swapPiece >= 0 && swapPiece != currentPiece)
             {
                 Vector3 tmpPos = pieces[currentPiece].transform.localPosition;
 
-                MovePiece (currentPiece, pieces[swapPiece].transform.localPosition, true, movementTime/2);
-                MovePiece (swapPiece, tmpPos, true, movementTime/2);
+                MovePiece(currentPiece, pieces[swapPiece].transform.localPosition, true, movementTime / 2);
+                MovePiece(swapPiece, tmpPos, true, movementTime / 2);
 
                 currentObject = null;
                 currentPiece = -1;
@@ -238,10 +237,11 @@ public class PuzzleController : MonoBehaviour
                 return PuzzleState.DropPiece;
             }
             else
-            {
                 swapPiece = -1;
-            }
         }
+
+
+
 
         // If no piece is grabbed - RETURN
         if (currentObject == null)
@@ -250,44 +250,41 @@ public class PuzzleController : MonoBehaviour
         }
         else
             // Check alternative drag
-            if (alternativeDragging )
-                if (Time.time > (grabTime + 0.1f))                
-                    _dragInput = !_dragInput;                
-                else
-                    _dragInput = true;
+            if (alternativeDragging)
+            if (Time.time > (grabTime + 0.1f))
+                _dragInput = !_dragInput;
+            else
+                _dragInput = true;
 
 
 
         // Pointer position offset for mobile or rotation for desktop
         if (Input.touchCount > 0)
-        {
             _pointerPosition.y += pieces[currentPiece].renderer.bounds.size.y * mobileDragOffsetY;
-        }
-        else if (changeOnlyRotation)
-        {
+        else
+        if (changeOnlyRotation)
             _rotationDirection = 1;
-        }
-            
+
         // Set currentObject center position  to pointerPosition
         if (!changeOnlyRotation && !swapPuzzleMode)
-        {
             currentObjectTransform.position = new Vector3(_pointerPosition.x - pieceCenterOffset.x, _pointerPosition.y - pieceCenterOffset.y, currentObjectTransform.position.z);
-        }
+
 
         // If piece rotation requested(by RMB or 2 touched) and possible - rotate piece around Z-axis
-        if (_rotationDirection != 0  &&  randomizeRotation  &&  (!gradualRotation || Time.time > timeToRotate))
+        if (_rotationDirection != 0 && randomizeRotation && (!gradualRotation || Time.time > timeToRotate))
         {
+
+
             currentObjectTransform.RotateAround(
-                pieces[currentPiece].renderer.bounds.center,
-                Vector3.forward,
-                gradualRotation ? rotationSpeed : _rotationDirection * rotationSpeed * Time.deltaTime
-            );
+                                                    pieces[currentPiece].renderer.bounds.center,
+                                                    Vector3.forward,
+                                                    gradualRotation ? rotationSpeed : _rotationDirection * rotationSpeed * Time.deltaTime
+                                                );
             timeToRotate = Time.time + 0.25f;
 
             if (!currentGroup)
-            {
                 pieceCenterOffset = pieces[currentPiece].GetPieceCenterOffset();
-            }
+
             state = PuzzleState.RotatePiece;
         }
 
@@ -295,26 +292,25 @@ public class PuzzleController : MonoBehaviour
         // Tilt piece according to movement direction if needed
         if (dragTiltSpeed > 0)
         {
-            currentObjectTransform.localRotation
-                = new Quaternion (
-                    Mathf.Lerp (currentObjectTransform.localRotation.x, (oldPointerPosition.y - _pointerPosition.y) * dragTiltSpeed, Time.deltaTime),
-                    Mathf.Lerp (currentObjectTransform.localRotation.y, (oldPointerPosition.x - _pointerPosition.x) * dragTiltSpeed, Time.deltaTime),
-                    currentObjectTransform.localRotation.z,
-                    currentObjectTransform.localRotation.w
-            );
+            currentObjectTransform.localRotation = new Quaternion(
+                                                                    Mathf.Lerp(currentObjectTransform.localRotation.x, (oldPointerPosition.y - _pointerPosition.y) * dragTiltSpeed, Time.deltaTime),
+                                                                    Mathf.Lerp(currentObjectTransform.localRotation.y, (oldPointerPosition.x - _pointerPosition.x) * dragTiltSpeed, Time.deltaTime),
+                                                                    currentObjectTransform.localRotation.z,
+                                                                    currentObjectTransform.localRotation.w
+                                                                );
             oldPointerPosition = _pointerPosition;
         }
 
 
         // Drop piece and assemble it to puzzle (if it close enough to it initial position/rotation)    
-        if (!_dragInput) 
-        {   
+        if (!_dragInput)
+        {
             currentObjectTransform.localRotation = new Quaternion(0, 0, currentObjectTransform.localRotation.z, currentObjectTransform.localRotation.w); //Removes the tilt effect
             if (!changeOnlyRotation && !swapPuzzleMode)
-                currentObjectTransform.position = new Vector3 (currentObjectTransform.position.x, currentObjectTransform.position.y, currentObjectTransform.position.z + dragOffsetZ);
+                currentObjectTransform.position = new Vector3(currentObjectTransform.position.x, currentObjectTransform.position.y, currentObjectTransform.position.z + dragOffsetZ);
 
             // Process groups if needed
-            if (enablePiecesGroups && !swapPuzzleMode) 
+            if (enablePiecesGroups && !swapPuzzleMode)
             {
                 bool grouping = false;
 
@@ -323,23 +319,23 @@ public class PuzzleController : MonoBehaviour
                     if (movedPieceId != currentPiece)
                         if (currentGroup != null) // if dropped a group
                         {
-                            if (pieces [movedPieceId].transform.parent != currentGroup.transform)
+                            if (pieces[movedPieceId].transform.parent != currentGroup.transform)
                                 foreach (PuzzlePiece groupPiece in currentGroup.puzzlePieces)
-                                    if (groupPiece.renderer.bounds.Intersects (pieces [movedPieceId].renderer.bounds))
-                                        overlappedPieces.Add (pieces [movedPieceId]);
-                        } 
+                                    if (groupPiece.renderer.bounds.Intersects(pieces[movedPieceId].renderer.bounds))
+                                        overlappedPieces.Add(pieces[movedPieceId]);
+                        }
                         else  // if dropped a piece
-                            if (pieces [currentPiece].renderer.bounds.Intersects (pieces [movedPieceId].renderer.bounds))
-                                overlappedPieces.Add (pieces [movedPieceId]);
+                            if (pieces[currentPiece].renderer.bounds.Intersects(pieces[movedPieceId].renderer.bounds))
+                            overlappedPieces.Add(pieces[movedPieceId]);
 
                 // Try to merge overlapped pieces to groups
-                for (int i = 0; i < overlappedPieces.Count; i++) 
-                    grouping |= PuzzlePieceGroup.MergeGroupsOrPieces (pieces [currentPiece], overlappedPieces [i], this);
-                overlappedPieces.Clear ();
+                for (int i = 0; i < overlappedPieces.Count; i++)
+                    grouping |= PuzzlePieceGroup.MergeGroupsOrPieces(pieces[currentPiece], overlappedPieces[i], this);
+                overlappedPieces.Clear();
 
-                if (grouping) 
+                if (grouping)
                 {
-                    UpdateUngroupedPiecesList ();
+                    UpdateUngroupedPiecesList();
                     state = PuzzleState.DropPiece;
                 }
 
@@ -347,25 +343,25 @@ public class PuzzleController : MonoBehaviour
                 // Assemble grouped pieces to puzzle
                 if (currentGroup != null)
                 {
-                    if (IsPieceInPlace (currentGroup.puzzlePieces [0], allowedDistance, allowedRotation) || (invertedRules && !IsPieceInPlace (currentGroup.puzzlePieces [0], allowedDistance, allowedRotation))) 
+                    if (IsPieceInPlace(currentGroup.puzzlePieces[0], allowedDistance, allowedRotation) || (invertedRules && !IsPieceInPlace(currentGroup.puzzlePieces[0], allowedDistance, allowedRotation)))
                     {
-                        int groupPieceId; 
+                        int groupPieceId;
 
-                        foreach (PuzzlePiece groupPiece in currentGroup.puzzlePieces) 
+                        foreach (PuzzlePiece groupPiece in currentGroup.puzzlePieces)
                         {
                             groupPiece.transform.parent = thisTransform;
-                            groupPieceId = GetPieceId (groupPiece);
+                            groupPieceId = GetPieceId(groupPiece);
 
                             if (invertedRules)
-                                movedPieces.Remove (groupPieceId);
+                                movedPieces.Remove(groupPieceId);
                             else
-                                ReturnPiece (groupPieceId, movementTime);
+                                ReturnPiece(groupPieceId, movementTime);
 
                         }
-                        Destroy (currentGroup.gameObject);
+                        Destroy(currentGroup.gameObject);
 
                         state = PuzzleState.ReturnPiece;
-                    } 
+                    }
                     else // Just drop it
                         state = PuzzleState.DropPiece;
                 }
@@ -374,34 +370,29 @@ public class PuzzleController : MonoBehaviour
 
             //Assemble ungrouped piece to puzzle
             if (currentGroup == null && !swapPuzzleMode)
-            {
                 if (IsPieceInPlace(currentPiece, allowedDistance, allowedRotation) || (invertedRules && !IsPieceInPlace(currentPiece, allowedDistance, allowedRotation)))
                 {
                     if (invertedRules)
-                    {
                         movedPieces.Remove(currentPiece);
-                    }
                     else
-                    {
                         ReturnPiece(currentPiece, movementTime);
-                    }
+
                     state = PuzzleState.ReturnPiece;
                 }
-                else
-                {
-                    // Just drop it
+                else // Just drop it
                     state = PuzzleState.DropPiece;
-                }
 
-                if (!swapPuzzleMode)
-                {
-                    currentObject = null;
-                    currentPiece = -1;
-                }
+
+            if (!swapPuzzleMode)
+            {
+                currentObject = null;
+                currentPiece = -1;
             }
+
         }
 
-        return state;             
+
+        return state;
     }
 
     //----------------------------------------------------------------------------------------------------
