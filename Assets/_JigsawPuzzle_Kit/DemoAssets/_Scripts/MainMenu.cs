@@ -32,7 +32,7 @@ public class MainMenu : ControllerBase
             int isShowed = PlayerPrefsUtility.Load(GameConfig.WelcomeDialogKey, 0);
             if (isShowed <= 0)
             {
-                _dialog.ShowDialog("\nようこそ！ファミリーパズル", 0, false);
+                _dialog.ShowDialog("\nようこそ！Funny Jigsaw！！", 0, false);
                 PlayerPrefsUtility.Save(GameConfig.WelcomeDialogKey, 1);
             }
         }
