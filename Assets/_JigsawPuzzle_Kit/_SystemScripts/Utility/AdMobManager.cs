@@ -7,7 +7,7 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
 {
     private AudioSource _musicPlayer;
     private SimpleDialog _dialog;
-    private int _addHintCount = 30;
+    private int _addHintCount = 3;
     private PuzzleClassicModel _model;
 
     private RewardedAd rewardedAd;
