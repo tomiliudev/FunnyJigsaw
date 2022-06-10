@@ -162,7 +162,7 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
 
     // ---------------↓↓　インタースティシャル　↓↓-------------------
 
-    public void RequestInterstitial()
+    private void RequestInterstitial()
     {
         // Initialize an InterstitialAd.
         this.interstitial = new InterstitialAd(GameConfig.GetInterstitialAdUnitId());
@@ -185,7 +185,7 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
     public void HandleOnInterstitialAdLoaded(object sender, EventArgs args)
     {
         MonoBehaviour.print("HandleAdLoaded event received");
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
     }
 
     public void HandleOnInterstitialAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
