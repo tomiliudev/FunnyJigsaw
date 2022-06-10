@@ -25,7 +25,7 @@ public class MainMenu : ControllerBase
 	protected void Start () 
 	{
 		_admobManager = FindObjectOfType<AdMobManager>();
-		//_admobManager.RequestBanner();
+		_admobManager.RequestBanner();
 
 		if (_dialog)
         {

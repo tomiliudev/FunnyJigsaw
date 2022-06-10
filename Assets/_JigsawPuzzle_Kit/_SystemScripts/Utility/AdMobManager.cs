@@ -24,9 +24,9 @@ public sealed class AdMobManager : SingletonMonoBehaviour<AdMobManager>
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus => { });
 
-        //CreateAndLoadRewardedAd();
+        CreateAndLoadRewardedAd();
 
-        //RequestInterstitial();
+        RequestInterstitial();
     }
 
     // ---------------↓↓　リワード　↓↓-------------------
